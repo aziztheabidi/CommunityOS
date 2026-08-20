@@ -1,27 +1,34 @@
 # Deploying CommunityOS web on Vercel
 
-The web app is **Next.js** in a pnpm monorepo (`apps/web`). It is not a static site. Do **not** use Output Directory `public`.
+The web app is **Next.js** at `apps/web` in a pnpm monorepo.
 
-`rootDirectory` is a **dashboard** setting only — it is not allowed in `vercel.json` (schema rejects it).
+## Recommended (dashboard)
 
-## Fix for: `No Output Directory named "public"`
+**Project → Settings → Build and Deployment:**
 
-`apps/web/vercel.json` sets `"outputDirectory": null` so Vercel auto-detects Next.js output and **overrides** a dashboard value of `public`.
+| Setting | Value |
+|--------|--------|
+| Framework Preset | **Next.js** |
+| Root Directory | **`apps/web`** |
+| Include files outside Root Directory | **On** |
+| Output Directory | Override **Off** (never `public`) |
+| Install / Build | leave default, or use `apps/web/vercel.json` |
 
-Still set in the dashboard:
+Then remove any yellow **Production Overrides** still forcing Output Directory = `public`.
 
-1. **Framework Preset** → **Next.js**
-2. **Root Directory** → `apps/web`
-3. **Include source files outside of the Root Directory** → **On**
-4. **Output Directory** → Override **Off** (optional once `null` is in vercel.json)
+## If Root Directory stays at the repo root
 
-Then redeploy.
+Root `vercel.json` uses the Next.js builder on `apps/web/package.json` so Vercel does not look for a static `public` output folder:
 
-## Environment variables
+```json
+{
+  "installCommand": "pnpm install",
+  "builds": [{ "src": "apps/web/package.json", "use": "@vercel/next" }]
+}
+```
+
+Prefer switching Root Directory to `apps/web` when you can; `builds` is the legacy monorepo path.
+
+## Environment
 
 - `NEXT_PUBLIC_API_URL` — public URL of the Fastify API
-
-## Repo files
-
-- `/apps/web/vercel.json` — `framework: nextjs` + monorepo install/build (used when Root Directory is `apps/web`)
-- `/apps/web/public/` — static assets only (e.g. `robots.txt`); **not** the Vercel build output
