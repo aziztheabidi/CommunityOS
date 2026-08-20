@@ -14,9 +14,12 @@
     "db:generate": "pnpm --filter @communityos/database generate",
     "db:migrate": "pnpm --filter @communityos/database migrate:dev",
     "db:deploy": "pnpm --filter @communityos/database migrate:deploy",
+    "db:seed": "pnpm --filter @communityos/database seed",
+    "db:seed:supabase": "pnpm --filter @communityos/database seed:supabase",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\" --ignore-path .gitignore"
   },
   "devDependencies": {
+    "dotenv": "^17.4.2",
     "prettier": "^3.4.2",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2"

@@ -1,5 +1,11 @@
+import { config } from "dotenv";
+import { resolve } from "node:path";
 import { loadEnv } from "@communityos/config";
 import { buildServer } from "./app.js";
+
+// Load monorepo root .env then local overrides
+config({ path: resolve(process.cwd(), "../../.env") });
+config({ path: resolve(process.cwd(), ".env") });
 
 async function main() {
   const env = loadEnv();

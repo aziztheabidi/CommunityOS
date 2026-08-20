@@ -15,6 +15,36 @@ enum MembershipStatus {
   left
 }
 
+enum PropertyType {
+  house
+  apartment
+  plot
+  commercial
+  mixed
+  vacant
+}
+
+enum PropertyStatus {
+  occupied
+  vacant
+  under_construction
+  unknown
+}
+
+enum GeoFeatureType {
+  amenity
+  park
+  school
+  place_of_worship
+  medical
+  commercial
+  office
+  gate
+  community_center
+  security
+  other
+}
+
 model PlatformUser {
   id          String   @id @default(cuid())
   authSubject String   @unique
@@ -38,8 +68,25 @@ model Society {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  settings    SocietySettings?
-  memberships SocietyMembership[]
+  settings       SocietySettings?
+  memberships    SocietyMembership[]
+  geoLevels      GeoLevelDefinition[]
+  geoAreas       GeoArea[]
+  streets        Street[]
+  plots          Plot[]
+  properties     Property[]
+  geoFeatures    GeoFeature[]
+  households     Household[]
+  residents      Resident[]
+  professionalCategories ProfessionalCategory[]
+  professions    Profession[]
+  skills         Skill[]
+  businesses     Business[]
+  businessCategories BusinessCategory[]
+  connections    Connection[]
+  posts          Post[]
+  events         Event[]
+  opportunities  Opportunity[]
 
   @@index([isActive])
   @@map("societies")
@@ -77,4 +124,715 @@ model SocietyMembership {
   @@index([societyId, status])
   @@index([userId])
   @@map("society_memberships")
+}
+
+model GeoLevelDefinition {
+  id        String   @id @default(cuid())
+  societyId String
+  key       String
+  label     String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  society Society @relation(fields: [societyId], references: [id], onDelete: Cascade)
+
+  @@unique([societyId, key])
+  @@index([societyId, sortOrder])
+  @@map("geo_level_definitions")
+}
+
+model GeoArea {
+  id           String   @id @default(cuid())
+  societyId    String
+  levelKey     String
+  parentId     String?
+  name         String
+  code         String?
+  sortOrder    Int      @default(0)
+  /// GeoJSON geometry object (Polygon / MultiPolygon)
+  geomJson     Json?
+  /// GeoJSON Point
+  centroidJson Json?
+  metadata     Json     @default("{}")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  society    Society   @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  parent     GeoArea?  @relation("GeoAreaTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children   GeoArea[] @relation("GeoAreaTree")
+  streets    Street[]
+  plots      Plot[]
+  properties Property[]
+
+  @@index([societyId, levelKey])
+  @@index([societyId, parentId])
+  @@index([societyId, code])
+  @@map("geo_areas")
+}
+
+model Street {
+  id        String   @id @default(cuid())
+  societyId String
+  geoAreaId String?
+  name      String
+  code      String?
+  /// GeoJSON LineString / MultiLineString
+  geomJson  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  society    Society    @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  geoArea    GeoArea?   @relation(fields: [geoAreaId], references: [id], onDelete: SetNull)
+  plots      Plot[]
+  properties Property[]
+
+  @@index([societyId])
+  @@index([geoAreaId])
+  @@map("streets")
+}
+
+model Plot {
+  id         String   @id @default(cuid())
+  societyId  String
+  geoAreaId  String?
+  streetId   String?
+  plotNumber String
+  /// GeoJSON Polygon
+  geomJson   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  society    Society    @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  geoArea    GeoArea?   @relation(fields: [geoAreaId], references: [id], onDelete: SetNull)
+  street     Street?    @relation(fields: [streetId], references: [id], onDelete: SetNull)
+  properties Property[]
+
+  @@unique([societyId, plotNumber])
+  @@index([societyId, geoAreaId])
+  @@map("plots")
+}
+
+model Property {
+  id           String         @id @default(cuid())
+  societyId    String
+  geoAreaId    String?
+  plotId       String?
+  streetId     String?
+  label        String
+  addressLine  String?
+  propertyType PropertyType   @default(house)
+  status       PropertyStatus @default(unknown)
+  /// GeoJSON Point — admin precision; never expose casually to all residents
+  geomJson     Json?
+  metadata     Json           @default("{}")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  society Society  @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  geoArea GeoArea? @relation(fields: [geoAreaId], references: [id], onDelete: SetNull)
+  plot    Plot?    @relation(fields: [plotId], references: [id], onDelete: SetNull)
+  street  Street?  @relation(fields: [streetId], references: [id], onDelete: SetNull)
+  occupancies PropertyOccupancy[]
+
+  @@index([societyId, propertyType])
+  @@index([societyId, status])
+  @@index([societyId, geoAreaId])
+  @@map("properties")
+}
+
+model GeoFeature {
+  id          String         @id @default(cuid())
+  societyId   String
+  featureType GeoFeatureType
+  name        String
+  description String?
+  /// GeoJSON Point or Polygon
+  geomJson    Json?
+  properties  Json           @default("{}")
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  society Society @relation(fields: [societyId], references: [id], onDelete: Cascade)
+
+  @@index([societyId, featureType])
+  @@map("geo_features")
+}
+
+enum OccupancyKind {
+  owner_occupied
+  rented
+  vacant
+  other
+}
+
+enum ResidentStatus {
+  active
+  inactive
+  pending
+  moved_out
+}
+
+enum VisibilityLevel {
+  private
+  household
+  connections
+  members
+  society_admin
+  public
+}
+
+enum EmploymentStatus {
+  employed
+  self_employed
+  freelancing
+  student
+  retired
+  looking_for_work
+  not_specified
+}
+
+model PropertyOccupancy {
+  id          String        @id @default(cuid())
+  societyId   String
+  propertyId  String
+  householdId String?
+  kind        OccupancyKind @default(owner_occupied)
+  startedAt   DateTime      @default(now())
+  endedAt     DateTime?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  property  Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  household Household? @relation(fields: [householdId], references: [id], onDelete: SetNull)
+
+  @@index([societyId, propertyId])
+  @@index([householdId])
+  @@map("property_occupancies")
+}
+
+model Household {
+  id                 String   @id @default(cuid())
+  societyId          String
+  propertyId         String?
+  label              String?
+  primaryResidentId  String?
+  householdSize      Int      @default(1)
+  moveInDate         DateTime?
+  moveOutDate        DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  society     Society             @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  members     HouseholdMember[]
+  occupancies PropertyOccupancy[]
+  dependents  Dependent[]
+
+  @@index([societyId])
+  @@index([propertyId])
+  @@map("households")
+}
+
+model HouseholdMember {
+  id          String   @id @default(cuid())
+  householdId String
+  residentId  String
+  role        String   @default("member")
+  isPrimary   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  resident  Resident  @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@unique([householdId, residentId])
+  @@index([residentId])
+  @@map("household_members")
+}
+
+model Resident {
+  id               String           @id @default(cuid())
+  societyId        String
+  platformUserId   String?
+  fullName         String
+  preferredName    String?
+  email            String?
+  phone            String?
+  status           ResidentStatus   @default(active)
+  geoAreaId        String?
+  headline         String?
+  bio              String?
+  avatarUrl        String?
+  employmentStatus EmploymentStatus @default(not_specified)
+  yearsExperience  Int?
+  openToNetworking Boolean          @default(true)
+  openToMentoring  Boolean          @default(false)
+  lookingForWork   Boolean          @default(false)
+  openToConsulting Boolean          @default(false)
+  openToFreelance  Boolean          @default(false)
+  hiring           Boolean          @default(false)
+  volunteerAvail   Boolean          @default(false)
+  profileCompleteness Int           @default(0)
+  lastVerifiedAt   DateTime?
+  joinDate         DateTime         @default(now())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  society     Society                 @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  privacy     ResidentPrivacySettings?
+  memberships HouseholdMember[]
+  professions ResidentProfession[]
+  skills      ResidentSkill[]
+  employment  EmploymentRecord[]
+  businessOwnerships BusinessOwner[]
+  businessStaff      BusinessStaff[]
+  connectionsFrom    Connection[] @relation("ConnectionFrom")
+  connectionsTo      Connection[] @relation("ConnectionTo")
+  postsAuthored      Post[]
+  reactions          Reaction[]
+  comments           Comment[]
+  eventsHosted       Event[]
+  eventRsvps         EventRsvp[]
+  opportunitiesPosted Opportunity[]
+  opportunityApps    OpportunityApplication[]
+
+  @@index([societyId, status])
+  @@index([societyId, fullName])
+  @@index([geoAreaId])
+  @@map("residents")
+}
+
+model ResidentPrivacySettings {
+  id                 String          @id @default(cuid())
+  residentId         String          @unique
+  phoneVisibility    VisibilityLevel @default(connections)
+  emailVisibility    VisibilityLevel @default(connections)
+  addressVisibility  VisibilityLevel @default(society_admin)
+  professionVisibility VisibilityLevel @default(members)
+  skillsVisibility   VisibilityLevel @default(members)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@map("resident_privacy_settings")
+}
+
+model Dependent {
+  id           String   @id @default(cuid())
+  societyId    String
+  householdId  String
+  ageBand      String
+  educationStage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  household Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+
+  @@index([societyId, householdId])
+  @@map("dependents")
+}
+
+model ProfessionalCategory {
+  id        String   @id @default(cuid())
+  societyId String?
+  key       String
+  label     String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  society    Society?     @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  professions Profession[]
+
+  @@unique([societyId, key])
+  @@index([sortOrder])
+  @@map("professional_categories")
+}
+
+model Profession {
+  id         String  @id @default(cuid())
+  societyId  String?
+  categoryId String
+  key        String
+  label      String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  society  Society?              @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  category ProfessionalCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  residents ResidentProfession[]
+
+  @@unique([societyId, key])
+  @@index([categoryId])
+  @@map("professions")
+}
+
+model ResidentProfession {
+  id           String   @id @default(cuid())
+  residentId   String
+  professionId String
+  isPrimary    Boolean  @default(true)
+  title        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  resident   Resident   @relation(fields: [residentId], references: [id], onDelete: Cascade)
+  profession Profession @relation(fields: [professionId], references: [id], onDelete: Cascade)
+
+  @@unique([residentId, professionId])
+  @@index([professionId])
+  @@map("resident_professions")
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  societyId String?
+  key       String
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  society   Society?        @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  residents ResidentSkill[]
+
+  @@unique([societyId, key])
+  @@map("skills")
+}
+
+model ResidentSkill {
+  id         String   @id @default(cuid())
+  residentId String
+  skillId    String
+  createdAt  DateTime @default(now())
+
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+  skill    Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([residentId, skillId])
+  @@index([skillId])
+  @@map("resident_skills")
+}
+
+model EmploymentRecord {
+  id          String   @id @default(cuid())
+  residentId  String
+  employer    String?
+  jobTitle    String
+  isCurrent   Boolean  @default(true)
+  startYear   Int?
+  endYear     Int?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@index([residentId, isCurrent])
+  @@map("employment_records")
+}
+
+enum BusinessVerification {
+  unverified
+  pending
+  verified
+  rejected
+}
+
+enum BusinessVisibility {
+  members
+  public
+  private
+}
+
+model BusinessCategory {
+  id        String   @id @default(cuid())
+  societyId String?
+  key       String
+  label     String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  society    Society?   @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  businesses Business[]
+
+  @@unique([societyId, key])
+  @@index([sortOrder])
+  @@map("business_categories")
+}
+
+model Business {
+  id               String               @id @default(cuid())
+  societyId        String
+  categoryId       String?
+  name             String
+  slug             String
+  summary          String?
+  description      String?
+  phone            String?
+  email            String?
+  website          String?
+  geoAreaId        String?
+  addressLine      String?
+  geomJson         Json?
+  isResidentOwned  Boolean              @default(true)
+  isHiring         Boolean              @default(false)
+  offersResidentDiscount Boolean        @default(false)
+  verification     BusinessVerification @default(unverified)
+  visibility       BusinessVisibility   @default(members)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  society  Society           @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  category BusinessCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  owners   BusinessOwner[]
+  staff    BusinessStaff[]
+  services BusinessService[]
+
+  @@unique([societyId, slug])
+  @@index([societyId, categoryId])
+  @@index([societyId, isHiring])
+  @@map("businesses")
+}
+
+model BusinessOwner {
+  id         String   @id @default(cuid())
+  businessId String
+  residentId String
+  title      String?
+  isPrimary  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, residentId])
+  @@index([residentId])
+  @@map("business_owners")
+}
+
+model BusinessStaff {
+  id         String   @id @default(cuid())
+  businessId String
+  residentId String
+  roleTitle  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, residentId])
+  @@index([residentId])
+  @@map("business_staff")
+}
+
+model BusinessService {
+  id          String   @id @default(cuid())
+  businessId  String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@map("business_services")
+}
+
+enum ConnectionStatus {
+  pending
+  accepted
+  declined
+  blocked
+}
+
+enum PostKind {
+  update
+  announcement
+  question
+  opportunity_share
+}
+
+enum EventRsvpStatus {
+  going
+  interested
+  waitlist
+  cancelled
+}
+
+enum OpportunityKind {
+  job
+  internship
+  freelance
+  volunteer
+  mentorship
+  other
+}
+
+enum OpportunityStatus {
+  open
+  closed
+  filled
+  draft
+}
+
+model Connection {
+  id           String           @id @default(cuid())
+  societyId    String
+  fromResidentId String
+  toResidentId String
+  status       ConnectionStatus @default(pending)
+  message      String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  society Society  @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  from    Resident @relation("ConnectionFrom", fields: [fromResidentId], references: [id], onDelete: Cascade)
+  to      Resident @relation("ConnectionTo", fields: [toResidentId], references: [id], onDelete: Cascade)
+
+  @@unique([societyId, fromResidentId, toResidentId])
+  @@index([societyId, status])
+  @@index([toResidentId, status])
+  @@map("connections")
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  societyId   String
+  authorId    String
+  kind        PostKind @default(update)
+  body        String
+  geoAreaId   String?
+  isPinned    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  society   Society    @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  author    Resident   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  reactions Reaction[]
+  comments  Comment[]
+
+  @@index([societyId, createdAt])
+  @@index([authorId])
+  @@map("posts")
+}
+
+model Reaction {
+  id         String   @id @default(cuid())
+  postId     String
+  residentId String
+  emoji      String   @default("👍")
+  createdAt  DateTime @default(now())
+
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, residentId, emoji])
+  @@index([residentId])
+  @@map("reactions")
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  postId     String
+  authorId   String
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  post   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author Resident @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+  @@index([authorId])
+  @@map("comments")
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  societyId   String
+  hostId      String?
+  title       String
+  summary     String?
+  description String?
+  locationName String?
+  geoAreaId   String?
+  geomJson    Json?
+  startsAt    DateTime
+  endsAt      DateTime?
+  capacity    Int?
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  society Society     @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  host    Resident?   @relation(fields: [hostId], references: [id], onDelete: SetNull)
+  rsvps   EventRsvp[]
+
+  @@index([societyId, startsAt])
+  @@index([hostId])
+  @@map("events")
+}
+
+model EventRsvp {
+  id         String          @id @default(cuid())
+  eventId    String
+  residentId String
+  status     EventRsvpStatus @default(going)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  event    Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  resident Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, residentId])
+  @@index([residentId])
+  @@map("event_rsvps")
+}
+
+model Opportunity {
+  id           String            @id @default(cuid())
+  societyId    String
+  posterId     String?
+  kind         OpportunityKind   @default(other)
+  status       OpportunityStatus @default(open)
+  title        String
+  summary      String?
+  description  String?
+  geoAreaId    String?
+  isRemoteOk   Boolean           @default(false)
+  compensation String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  closesAt     DateTime?
+
+  society      Society                   @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  poster       Resident?                 @relation(fields: [posterId], references: [id], onDelete: SetNull)
+  applications OpportunityApplication[]
+
+  @@index([societyId, status, kind])
+  @@index([posterId])
+  @@map("opportunities")
+}
+
+model OpportunityApplication {
+  id            String   @id @default(cuid())
+  opportunityId String
+  residentId    String
+  message       String?
+  status        String   @default("submitted")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  resident    Resident    @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@unique([opportunityId, residentId])
+  @@index([residentId])
+  @@map("opportunity_applications")
 }

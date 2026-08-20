@@ -49,15 +49,20 @@ Establish monorepo, tooling, DB package with PostGIS readiness, auth stub, CI, d
 
 ## Milestone 1 — Society Geography & Properties
 
+**Status:** Demo-ready (in-memory Green Valley dataset). Persist to Supabase after migrate + seed.
+
 **Obj:** Configurable geo hierarchy, properties, boundaries, interactive base map.  
-**Schema:** geo levels/areas, streets/plots, properties, geo_boundaries/features.  
-**API:** CRUD areas/properties; GeoJSON endpoints.  
-**UI:** Map standard mode, admin geo tools.  
-**Sec:** `geo.*`, `properties.*`, `map.*`.  
-**Tests:** spatial contains, tenant isolation.  
-**Risks:** bad GeoJSON imports; mobile map UX.
+**Schema:** geo levels/areas, streets/plots, properties, geo_features (+ PostGIS extension from M0).  
+**API:** societies, areas, properties, features, map GeoJSON (demo-backed).  
+**UI:** Home intelligence, Society Map (MapLibre), Properties, Geography, Admin checklist.  
+**Sec:** map/geo read surfaces public for demo; production will enforce `geo.*` / `map.*`.  
+**Tests:** demo geojson + property filter API tests.  
+**Risks:** replace demo mode after DB seed; OSM tiles need network.
+
 
 ## Milestone 2 — Households & Residents
+
+**Status:** Demo + Supabase SQL ready (API/UI wired).
 
 **Obj:** Occupancy history, households, residents, dependents, privacy settings, CSV import preview.  
 **Sec:** children exclusion; address precision.  
@@ -65,30 +70,44 @@ Establish monorepo, tooling, DB package with PostGIS readiness, auth stub, CI, d
 
 ## Milestone 3 — Professional Intelligence
 
+**Status:** Demo + Supabase SQL ready (directory UI wired).
+
 **Obj:** Taxonomies, employment, skills, education, professional directory + filters.  
 **UI:** category landing + faceted directory.
 
 ## Milestone 4 — Business Ecosystem
 
+**Status:** Schema + SQL seed + directory UI + map pins.
+
 **Obj:** Businesses, ownership, services, directory + map pins, verification basics.
 
 ## Milestone 5 — Society Intelligence Map
+
+**Status:** Area intelligence panel, business/event layers, profession buckets.
 
 **Obj:** Profession layers, heatmaps, spatial filters, sector drawer, aggregation thresholds, URL state.
 
 ## Milestone 6 — Networking
 
+**Status:** Connections API/UI + SQL seed (accepted/pending).
+
 **Obj:** Connections vs follows, discovery rules, mentoring flags in directory.
 
 ## Milestone 7 — Social Community
+
+**Status:** Feed posts with reactions/comments counts + filters.
 
 **Obj:** Feed, media, comments, reactions, announcements targeting, polls, moderation hooks, cursor pagination.
 
 ## Milestone 8 — Groups & Events
 
+**Status:** Events + RSVP counts + map pins (groups later).
+
 **Obj:** Groups, events, RSVP/waitlist architecture, calendar, map location.
 
 ## Milestone 9 — Opportunity & Prosperity Hub
+
+**Status:** Opportunities directory + applications counts.
 
 **Obj:** Jobs/internships/freelance/volunteer/mentorship + applications + basic matching.
 

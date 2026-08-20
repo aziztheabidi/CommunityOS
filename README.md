@@ -6,9 +6,9 @@ CommunityOS is a privacy-aware platform for residential societies and gated comm
 
 ## Status
 
-**Milestone 0 (Architecture & Engineering Foundation)** — scaffold complete.
+**Milestone 1 (Society Geography & Properties)** — in progress / demo-ready.
 
-Monorepo, API/web/worker apps, permissions, Prisma + PostGIS migration, CI, and design shell are in place. Next: Milestone 1 (Society Geography & Properties).
+Interactive Society Map, property register, geography hierarchy, and Jaffar-e-Tayyar demo data work without Database URLs. See [Supabase setup](./docs/SUPABASE_SETUP.md).
 
 ### Quick start
 
@@ -19,8 +19,19 @@ pnpm dev
 ```
 
 - Web: http://localhost:3000  
+- Map: http://localhost:3000/map  
 - API health: http://localhost:4000/health  
-- API auth stub: `Authorization: Bearer dev-bypass` → `GET /v1/me`
+- Demo GeoJSON: http://localhost:4000/v1/societies/jaffar-e-tayyar/map/geojson  
+
+When Supabase SQL is applied (or Prisma URLs are set):
+
+```bash
+# Option A: run packages/database/prisma/manual/supabase-sql-editor-bootstrap.sql in SQL Editor
+# Option B: set DATABASE_URL + DIRECT_URL then:
+pnpm db:migrate
+pnpm db:seed
+```
+
 
 ## Documentation
 
