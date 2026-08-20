@@ -40,5 +40,6 @@ pnpm db:seed
 | [AGENTS.md](./AGENTS.md) | Mandatory agent/engineer operating rules |
 | [Product Vision](./docs/PRODUCT_VISION.md) | Long-term product intent |
 | [Supabase setup](./docs/SUPABASE_SETUP.md) | SQL Editor + env configuration |
+| [Vercel deploy](./docs/VERCEL_DEPLOY.md) | Fix Next.js monorepo deploy (not `public` output) |
 | [Implementation Plan](./docs/IMPLEMENTATION_PLAN.md) | Delivery tasks |
 | [Roadmap](./docs/ROADMAP.md) | Milestone overview |

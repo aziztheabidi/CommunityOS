@@ -1,19 +1,29 @@
 :root {
-  --cos-ink: #0b1f24;
-  --cos-teal: #0f6b6b;
-  --cos-teal-soft: #d8efef;
-  --cos-sand: #f3efe6;
-  --cos-sand-deep: #e7e0d2;
-  --cos-accent: #c45c26;
-  --cos-success: #1f7a4d;
-  --cos-danger: #b42318;
-  --cos-warning: #b54708;
-  --cos-surface: #fffcf7;
-  --cos-border: color-mix(in oklab, var(--cos-ink) 12%, transparent);
-  --cos-radius: 14px;
-  --cos-shadow: 0 10px 30px color-mix(in oklab, var(--cos-ink) 8%, transparent);
+  --cos-ink: #071a1f;
+  --cos-teal: #0d9488;
+  --cos-teal-deep: #0f766e;
+  --cos-teal-soft: #ccfbf1;
+  --cos-cyan: #06b6d4;
+  --cos-emerald: #10b981;
+  --cos-amber: #f59e0b;
+  --cos-coral: #f97316;
+  --cos-sky: #0ea5e9;
+  --cos-rose: #e11d48;
+  --cos-sand: #f4f7f5;
+  --cos-sand-deep: #e2ebe7;
+  --cos-accent: #f97316;
+  --cos-success: #059669;
+  --cos-danger: #e11d48;
+  --cos-warning: #d97706;
+  --cos-surface: #ffffff;
+  --cos-border: color-mix(in oklab, var(--cos-ink) 10%, transparent);
+  --cos-radius: 1.15rem;
+  --cos-shadow: 0 12px 40px color-mix(in oklab, var(--cos-ink) 10%, transparent);
   --cos-font-sans: "Sora", "Segoe UI", sans-serif;
   --cos-font-display: "Fraunces", Georgia, serif;
+  --cos-gradient-brand: linear-gradient(135deg, #0f766e 0%, #06b6d4 48%, #10b981 100%);
+  --cos-gradient-warm: linear-gradient(135deg, #f97316 0%, #f59e0b 55%, #fb7185 100%);
+  --cos-gradient-cool: linear-gradient(145deg, #ecfeff 0%, #f0fdfa 45%, #fff7ed 100%);
 }
 
 .cos-card {
@@ -21,6 +31,24 @@
   border: 1px solid var(--cos-border);
   border-radius: var(--cos-radius);
   box-shadow: var(--cos-shadow);
+}
+
+.cos-card-glow {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cos-card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -40% auto auto -20%;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.18), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .cos-pill {
@@ -31,4 +59,42 @@
   padding: 0.2rem 0.65rem;
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+@keyframes cos-rise {
+  from {
+    transform: scaleY(0);
+    opacity: 0.35;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cos-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cos-chart-bar {
+  transform-origin: bottom;
+  animation: cos-rise 0.7s ease-out both;
+}
+
+.cos-fade-up {
+  animation: cos-fade-up 0.55s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cos-chart-bar,
+  .cos-fade-up {
+    animation: none !important;
+  }
 }

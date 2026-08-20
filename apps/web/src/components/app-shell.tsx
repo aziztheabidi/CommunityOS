@@ -25,14 +25,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[17rem_1fr]">
-      <aside className="relative overflow-hidden border-b border-white/10 bg-[linear-gradient(165deg,#0b1f24_0%,#12353a_48%,#0f6b6b_140%)] px-4 py-5 text-white lg:border-b-0 lg:border-r lg:border-white/10">
-        <div className="pointer-events-none absolute -left-10 top-24 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(216,239,239,0.22),transparent_70%)]" />
+      <aside className="relative overflow-hidden border-b border-white/10 bg-[linear-gradient(165deg,#042f2e_0%,#0f766e_42%,#0891b2_88%,#ea580c_160%)] px-4 py-5 text-white lg:border-b-0 lg:border-r lg:border-white/10">
+        <div className="pointer-events-none absolute -left-10 top-16 h-44 w-44 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.18),transparent_70%)]" />
+        <div className="pointer-events-none absolute -right-8 bottom-10 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(251,146,60,0.28),transparent_70%)]" />
         <div className="relative px-2">
           <p className="font-display text-2xl tracking-tight">CommunityOS</p>
-          <p className="mt-1 text-xs text-white/65">Society Intelligence Platform</p>
-          <div className="mt-4 rounded-xl bg-white/10 px-3 py-2 text-xs backdrop-blur">
-            <p className="font-semibold text-white/90">Jaffar-e-Tayyar Society</p>
-            <p className="text-white/55">Administrator workspace</p>
+          <p className="mt-1 text-xs text-white/70">Society Intelligence Platform</p>
+          <div className="mt-4 rounded-2xl bg-white/12 px-3 py-2.5 text-xs shadow-inner backdrop-blur">
+            <p className="font-semibold text-white">Jaffar-e-Tayyar Society</p>
+            <p className="text-white/60">Administrator workspace</p>
           </div>
         </div>
         <nav className="relative mt-6 space-y-1" aria-label="Primary">
@@ -47,11 +48,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 href={item.href}
                 className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition ${
                   active
-                    ? "bg-white text-[var(--cos-ink)] shadow-lg shadow-black/10"
-                    : "text-white/80 hover:bg-white/10 hover:text-white"
+                    ? "bg-white text-[var(--cos-ink)] shadow-lg shadow-black/15"
+                    : "text-white/85 hover:bg-white/12 hover:text-white"
                 }`}
               >
-                <span>{item.label}</span>
+                <span className={active ? "text-[var(--cos-ink)]" : undefined}>{item.label}</span>
               </Link>
             );
           })}
