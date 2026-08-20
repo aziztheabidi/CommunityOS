@@ -87,8 +87,8 @@ export default function HomePage() {
       <div className="cos-card p-8">
         <h1 className="font-display text-3xl text-ink">API offline</h1>
         <p className="mt-3 text-sm text-[color-mix(in_oklab,var(--cos-ink)_70%,transparent)]">
-          Start the API (`pnpm --filter @communityos/api dev` or `pnpm dev`) so society data can
-          load. Default endpoint: http://localhost:4000
+          Could not load society data from `/v1`. Restart the web app after clearing
+          `NEXT_PUBLIC_API_URL`, or ensure the same-origin BFF is available.
         </p>
       </div>
     );

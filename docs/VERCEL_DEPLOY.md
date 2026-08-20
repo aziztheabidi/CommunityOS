@@ -21,7 +21,7 @@ Redeploy **without** build cache after changing these settings.
 
 | Variable | Notes |
 |----------|--------|
-| Leave **`NEXT_PUBLIC_API_URL` unset** | Browser uses same-origin `/v1` BFF |
+| **Delete** `NEXT_PUBLIC_API_URL` if present | Especially if it is `http://localhost:4000` — that breaks production |
 | `COMMUNITYOS_DEMO_DATA` | `1` until Supabase is seeded (`0` only when DB is ready) |
 | `SUPABASE_URL` | Optional; enables live society data |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only; never expose to the browser |
