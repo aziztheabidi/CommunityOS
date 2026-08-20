@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "cd ../.. && pnpm --filter @communityos/web... build && cd apps/web && node ../../scripts/stage-web-public.mjs",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter @communityos/web... build && node scripts/stage-web-public.mjs",
   "outputDirectory": "public",
   "headers": [
     {

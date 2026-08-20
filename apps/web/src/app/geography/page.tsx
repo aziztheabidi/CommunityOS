@@ -1,13 +1,47 @@
+"use client";
+
 import Link from "next/link";
-import { fetchGeoAreas, fetchSociety } from "@/lib/api";
+import { useEffect, useState } from "react";
+import { fetchGeoAreas, fetchSociety, type GeoArea, type SocietyDetail } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+export default function GeographyPage() {
+  const [society, setSociety] = useState<SocietyDetail | null>(null);
+  const [areas, setAreas] = useState<GeoArea[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function GeographyPage() {
-  const [{ data: society }, { data: areas }] = await Promise.all([
-    fetchSociety(),
-    fetchGeoAreas(),
-  ]);
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([fetchSociety(), fetchGeoAreas()])
+      .then(([{ data: nextSociety }, { data: nextAreas }]) => {
+        if (!cancelled) {
+          setSociety(nextSociety);
+          setAreas(nextAreas);
+          setError(null);
+        }
+      })
+      .catch((err: Error) => {
+        if (!cancelled) setError(err.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) {
+    return <div className="cos-card p-8 text-[var(--cos-ink)]/50">Loading geography…</div>;
+  }
+
+  if (error || !society) {
+    return (
+      <div className="cos-card p-8">
+        <p className="text-sm text-[var(--cos-danger)]">{error ?? "Unable to load geography"}</p>
+      </div>
+    );
+  }
 
   const phases = areas.filter((area) => area.levelKey === "phase");
   const sectors = areas.filter((area) => area.levelKey === "sector");

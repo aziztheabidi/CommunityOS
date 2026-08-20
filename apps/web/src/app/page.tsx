@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button, StatCard } from "@communityos/ui";
 import { DonutChart, HorizontalBars, VerticalBarChart } from "@/components/charts";
 import { HomeMapPreview } from "@/components/home-map-preview";
@@ -10,9 +13,10 @@ import {
   fetchOpportunities,
   fetchPeopleStats,
   fetchSociety,
+  type GeoArea,
+  type GeoFeature,
+  type SocietyDetail,
 } from "@/lib/api";
-
-export const dynamic = "force-dynamic";
 
 function greeting() {
   const hour = new Date().getHours();
@@ -21,25 +25,24 @@ function greeting() {
   return "Good evening";
 }
 
-export default async function HomePage() {
-  let society;
-  let sectors;
-  let features;
-  let people;
-  let life;
-  let events;
-  let opportunities;
+type HomeData = {
+  society: SocietyDetail;
+  sectors: GeoArea[];
+  features: GeoFeature[];
+  people: Awaited<ReturnType<typeof fetchPeopleStats>>["data"];
+  life: Awaited<ReturnType<typeof fetchCommunityStats>>["data"];
+  events: Awaited<ReturnType<typeof fetchEvents>>["data"];
+  opportunities: Awaited<ReturnType<typeof fetchOpportunities>>["data"];
+};
 
-  try {
-    [
-      { data: society },
-      { data: sectors },
-      { data: features },
-      { data: people },
-      { data: life },
-      { data: events },
-      { data: opportunities },
-    ] = await Promise.all([
+export default function HomePage() {
+  const [data, setData] = useState<HomeData | null>(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([
       fetchSociety(),
       fetchGeoAreas(undefined, "sector"),
       fetchFeatures(),
@@ -47,8 +50,39 @@ export default async function HomePage() {
       fetchCommunityStats(),
       fetchEvents(),
       fetchOpportunities(undefined, { status: "open" }),
-    ]);
-  } catch {
+    ])
+      .then(
+        ([
+          { data: society },
+          { data: sectors },
+          { data: features },
+          { data: people },
+          { data: life },
+          { data: events },
+          { data: opportunities },
+        ]) => {
+          if (!cancelled) {
+            setData({ society, sectors, features, people, life, events, opportunities });
+            setError(false);
+          }
+        },
+      )
+      .catch(() => {
+        if (!cancelled) setError(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) {
+    return <div className="cos-card p-8 text-[var(--cos-ink)]/50">Loading community overview…</div>;
+  }
+
+  if (error || !data) {
     return (
       <div className="cos-card p-8">
         <h1 className="font-display text-3xl text-ink">API offline</h1>
@@ -59,6 +93,8 @@ export default async function HomePage() {
       </div>
     );
   }
+
+  const { society, sectors, features, people, life, events, opportunities } = data;
 
   const sectorChart = sectors.map((sector) => ({
     label: sector.name.replace(/^Sector\s+/i, "S"),

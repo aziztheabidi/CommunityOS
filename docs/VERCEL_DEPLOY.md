@@ -1,28 +1,24 @@
 # Deploy CommunityOS web on Vercel
 
-## Required dashboard settings (this fixes 404 NOT_FOUND)
+The dashboard is stuck expecting **Output Directory = `public`**. The app now static-exports and stages files into `public/` so that setting works.
 
-The platform `404: NOT_FOUND` page means Vercel deployed without a Next.js routing manifest — usually wrong Root Directory, Framework “Other”, or Output Directory forced to `public` (only `robots.txt` is there, so `/` 404s).
+## What the build does
 
-In **Project → Settings → Build and Deployment**:
+1. `pnpm --filter @communityos/web... build` → Next `output: "export"` → `apps/web/out`
+2. `node scripts/stage-web-public.mjs` → copies export into `public/`
+3. Vercel deploys `public/`
 
-1. **Framework Preset** → **Next.js** (turn Override **off** if it says Other)
-2. **Root Directory** → click Edit → select **`apps/web`** → Save  
-   - Enable **Include source files outside of the Root Directory**
-3. **Output Directory** → Override **OFF** (must not be `public`)
-4. Clear any yellow **Production Overrides**
-5. **Deployments** → Redeploy → uncheck **Use existing Build Cache**
+## Dashboard (either Root Directory is fine)
 
-Do **not** set Root Directory to the repo root. Do **not** use a root `vercel.json` with legacy `builds`.
+| Setting | Value |
+|--------|--------|
+| Framework Preset | **Other** (or leave default) |
+| Root Directory | empty **or** `apps/web` |
+| Output Directory | **`public`** (matches the stuck setting) |
+| Install / Build | from `vercel.json` |
 
-## Repo config
-
-`apps/web/vercel.json` (used when Root Directory is `apps/web`):
-
-- `framework: nextjs`
-- `outputDirectory: null` (clears a stuck `public` override)
-- monorepo `installCommand` / `buildCommand`
+Redeploy **without** build cache.
 
 ## Env
 
-- `NEXT_PUBLIC_API_URL` — Fastify API public URL
+- `NEXT_PUBLIC_API_URL` — Fastify API URL (browser calls this at runtime)

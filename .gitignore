@@ -33,3 +33,4 @@ playwright-report/
 # Misc
 *.local
 .cache/
+/public
