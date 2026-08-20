@@ -6,23 +6,16 @@ The web app is **Next.js** in a pnpm monorepo (`apps/web`). It is not a static s
 
 ## Fix for: `No Output Directory named "public"`
 
-1. Open **Project → Settings → Build and Deployment**
-2. **Framework Preset** → **Next.js** (turn **Override** off if it forces “Other”)
-3. **Root Directory** → `apps/web` (Edit → select `apps/web`)
-4. **Include source files outside of the Root Directory** → **Enabled**
-5. **Output Directory** → turn **Override** **OFF** (field must be empty — never `public`)
-6. Save → **Deployments** → Redeploy
+`apps/web/vercel.json` sets `"outputDirectory": null` so Vercel auto-detects Next.js output and **overrides** a dashboard value of `public`.
 
-## Expected settings
+Still set in the dashboard:
 
-| Setting | Value |
-|--------|--------|
-| Framework Preset | Next.js |
-| Root Directory | `apps/web` (dashboard only) |
-| Install Command | default, or from `apps/web/vercel.json` |
-| Build Command | default, or from `apps/web/vercel.json` |
-| Output Directory | **cleared / override off** |
-| Include files outside Root Directory | **On** |
+1. **Framework Preset** → **Next.js**
+2. **Root Directory** → `apps/web`
+3. **Include source files outside of the Root Directory** → **On**
+4. **Output Directory** → Override **Off** (optional once `null` is in vercel.json)
+
+Then redeploy.
 
 ## Environment variables
 
