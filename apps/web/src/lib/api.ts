@@ -1,29 +1,12 @@
 /**
- * API base URL for fetch calls.
- * Prefer same-origin `/v1` BFF. Never call localhost from a deployed host
- * (even if NEXT_PUBLIC_API_URL was mistakenly set to localhost on Vercel).
+ * Always call the same-origin Next.js `/v1` BFF.
+ * Do not use NEXT_PUBLIC_API_URL in the browser — it was baking
+ * `http://localhost:4000` into production builds on Vercel.
  */
-function getApiBase(): string {
-  const configured = (process.env.NEXT_PUBLIC_API_URL ?? "").trim().replace(/\/$/, "");
-  if (!configured) return "";
-
-  const isLocalApi = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(configured);
-  if (typeof window !== "undefined") {
-    const host = window.location.hostname;
-    const pageIsLocal = host === "localhost" || host === "127.0.0.1";
-    if (isLocalApi && !pageIsLocal) return "";
-    return configured;
-  }
-
-  // Server-side: skip localhost so SSR never depends on a local Fastify process.
-  if (isLocalApi) return "";
-  return configured;
-}
-
 export const DEFAULT_SOCIETY_ID = "soc_demo_jaffar_e_tayyar";
 
 async function apiGet<T>(path: string): Promise<T> {
-  const response = await fetch(`${getApiBase()}${path}`, {
+  const response = await fetch(path, {
     cache: "no-store",
   });
   if (!response.ok) {

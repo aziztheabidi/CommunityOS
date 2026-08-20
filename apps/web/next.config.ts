@@ -9,8 +9,9 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@prisma/client", "prisma"],
   poweredByHeader: false,
   reactStrictMode: true,
-  // Placeholder so Prisma can load on Vercel when only Supabase REST + demo data are used.
+  // Force empty so a mistaken Vercel env cannot bake localhost into the client.
   env: {
+    NEXT_PUBLIC_API_URL: "",
     DATABASE_URL:
       process.env.DATABASE_URL ??
       "postgresql://postgres:postgres@127.0.0.1:5432/communityos?schema=public",
