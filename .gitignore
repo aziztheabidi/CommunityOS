@@ -36,3 +36,4 @@ playwright-report/
 *.local
 .cache/
 /public
+.vercel

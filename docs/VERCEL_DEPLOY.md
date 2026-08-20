@@ -1,18 +1,16 @@
 # Deploy CommunityOS web on Vercel
 
-## New project (required)
+Production: https://jtcommunity.vercel.app
 
-When importing the GitHub repo, set:
+## Project settings (managed via CLI / dashboard)
 
 | Setting | Value |
 |--------|--------|
 | **Framework Preset** | **Next.js** |
-| **Root Directory** | **`apps/web`** (not `apps/api`, not empty if the UI offers a picker) |
+| **Root Directory** | **`apps/web`** |
 | **Include files outside the root directory** | **On** |
-| **Output Directory** | leave **empty** |
-| Build / Install overrides | **Off** (uses `apps/web/vercel.json`) |
-
-If Root Directory is `apps/api`, the deploy will fail on purpose — that folder is the Fastify API, not the website.
+| **Output Directory** | empty |
+| Build / Install | from `apps/web/vercel.json` |
 
 ## Env
 
@@ -20,9 +18,11 @@ If Root Directory is `apps/api`, the deploy will fail on purpose — that folder
 |----------|--------|
 | `COMMUNITYOS_DEMO_DATA` | `1` |
 | Do **not** set `NEXT_PUBLIC_API_URL` | App uses same-origin `/v1` |
+| `SUPABASE_*` | Optional live data |
 
-Optional: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` for live data.
+## CLI
 
-## After settings change
-
-Redeploy **without** build cache.
+```bash
+vercel link --project jtcommunity --yes
+vercel deploy --prod --yes
+```
