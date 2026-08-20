@@ -78,6 +78,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@communityos/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@communityos/maps':
         specifier: workspace:^
         version: link:../../packages/maps

@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "pnpm -C ../.. --filter @communityos/ui --filter @communityos/maps run build && next build",
+    "build": "pnpm -C ../.. --filter @communityos/ui --filter @communityos/maps --filter @communityos/database run build && next build",
     "start": "next start --port 3000",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "next lint",
     "test": "node -e \"process.exit(0)\""
   },
   "dependencies": {
+    "@communityos/database": "workspace:*",
     "@communityos/maps": "workspace:^",
     "@communityos/ui": "workspace:*",
     "maplibre-gl": "^6.4.1",

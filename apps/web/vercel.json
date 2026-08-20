@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
   "installCommand": "cd ../.. && pnpm install",
-  "buildCommand": "cd ../.. && pnpm --filter @communityos/web... build && cd apps/web && node ../../scripts/stage-web-public.mjs",
-  "outputDirectory": "public",
+  "buildCommand": "cd ../.. && pnpm --filter @communityos/web... build",
   "headers": [
     {
       "source": "/(.*)",

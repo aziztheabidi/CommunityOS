@@ -20,8 +20,17 @@ export async function buildServer() {
   await app.register(helmet, {
     contentSecurityPolicy: false,
   });
+  const corsOrigins = env.CORS_ORIGIN.split(",").map((part) => part.trim()).filter(Boolean);
   await app.register(cors, {
-    origin: env.CORS_ORIGIN,
+    origin: corsOrigins.includes("*")
+      ? true
+      : (origin, cb) => {
+          if (!origin || corsOrigins.includes(origin)) {
+            cb(null, true);
+            return;
+          }
+          cb(null, false);
+        },
     credentials: true,
   });
   await app.register(rateLimit, {

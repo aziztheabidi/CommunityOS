@@ -1,4 +1,9 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+/**
+ * Browser API base URL.
+ * Empty = same-origin Next.js `/v1` BFF (required on Vercel).
+ * Set `NEXT_PUBLIC_API_URL` only when talking to a separate Fastify process.
+ */
+const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
 
 export const DEFAULT_SOCIETY_ID = "soc_demo_jaffar_e_tayyar";
 
