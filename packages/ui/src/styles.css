@@ -1,0 +1,34 @@
+:root {
+  --cos-ink: #0b1f24;
+  --cos-teal: #0f6b6b;
+  --cos-teal-soft: #d8efef;
+  --cos-sand: #f3efe6;
+  --cos-sand-deep: #e7e0d2;
+  --cos-accent: #c45c26;
+  --cos-success: #1f7a4d;
+  --cos-danger: #b42318;
+  --cos-warning: #b54708;
+  --cos-surface: #fffcf7;
+  --cos-border: color-mix(in oklab, var(--cos-ink) 12%, transparent);
+  --cos-radius: 14px;
+  --cos-shadow: 0 10px 30px color-mix(in oklab, var(--cos-ink) 8%, transparent);
+  --cos-font-sans: "Sora", "Segoe UI", sans-serif;
+  --cos-font-display: "Fraunces", Georgia, serif;
+}
+
+.cos-card {
+  background: var(--cos-surface);
+  border: 1px solid var(--cos-border);
+  border-radius: var(--cos-radius);
+  box-shadow: var(--cos-shadow);
+}
+
+.cos-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

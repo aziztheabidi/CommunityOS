@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum MembershipStatus {
+  active
+  invited
+  suspended
+  left
+}
+
+model PlatformUser {
+  id          String   @id @default(cuid())
+  authSubject String   @unique
+  email       String?  @unique
+  displayName String?
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships SocietyMembership[]
+
+  @@map("platform_users")
+}
+
+model Society {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  timezone  String   @default("UTC")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  settings    SocietySettings?
+  memberships SocietyMembership[]
+
+  @@index([isActive])
+  @@map("societies")
+}
+
+model SocietySettings {
+  id                   String   @id @default(cuid())
+  societyId            String   @unique
+  heatmapMinBucketSize Int      @default(5)
+  featureFlags         Json     @default("{}")
+  branding             Json     @default("{}")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  society Society @relation(fields: [societyId], references: [id], onDelete: Cascade)
+
+  @@map("society_settings")
+}
+
+model SocietyMembership {
+  id          String           @id @default(cuid())
+  societyId   String
+  userId      String
+  roleKey     String
+  status      MembershipStatus @default(invited)
+  permissions Json             @default("[]")
+  geoAreaIds  Json             @default("[]")
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  society Society      @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  user    PlatformUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([societyId, userId])
+  @@index([societyId, status])
+  @@index([userId])
+  @@map("society_memberships")
+}

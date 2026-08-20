@@ -1,0 +1,29 @@
+{
+  "name": "@communityos/database",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm generate && tsc -p tsconfig.json",
+    "generate": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5432/communityos?schema=public DIRECT_URL=postgresql://postgres:postgres@localhost:5432/communityos?schema=public prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "node -e \"process.exit(0)\""
+  },
+  "dependencies": {
+    "@prisma/client": "^6.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "prisma": "^6.1.0",
+    "typescript": "^5.7.2"
+  }
+}
