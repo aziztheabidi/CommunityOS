@@ -78,10 +78,10 @@ export default function EventsPage() {
                   .join(" · ")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="cos-pill bg-emerald-100 text-emerald-800">
+                <span className="cos-pill bg-[var(--cos-teal-soft)] text-teal">
                   {row.goingCount} going
                 </span>
-                <span className="cos-pill bg-sky-100 text-sky-900">
+                <span className="cos-pill bg-[var(--cos-sand)] text-ink">
                   {row.interestedCount} interested
                 </span>
                 {row.capacity ? (

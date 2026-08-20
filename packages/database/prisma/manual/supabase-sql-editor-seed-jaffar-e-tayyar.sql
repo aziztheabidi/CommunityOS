@@ -1,4 +1,4 @@
--- Seed: Jaffar-e-Tayyar Society
+-- Seed: Jaffar-e-Tayyar Society (Malir, Karachi · ~24.88446 N, 67.196885 E · postal 75050)
 -- Paste into Supabase SQL Editor on the CommunityOS project only.
 -- Safe to re-run (upserts / ON CONFLICT).
 BEGIN;
@@ -17,7 +17,7 @@ VALUES (
   'soc_demo_jaffar_e_tayyar',
   5,
   '{}'::jsonb,
-  '{"primaryLabel":"Jaffar-e-Tayyar","tagline":"Connected community. Shared opportunity."}'::jsonb,
+  '{"primaryLabel":"Jaffar-e-Tayyar","tagline":"Connected community. Shared opportunity.","location":{"district":"Malir District","city":"Karachi","postalCode":"75050","center":{"lat":24.88446,"lng":67.196885}}}'::jsonb,
   now(),
   now()
 )
@@ -56,8 +56,8 @@ VALUES (
   'Phase 1',
   'P1',
   1,
-  '{"type":"Polygon","coordinates":[[[73.043,33.707],[73.05900000000001,33.707],[73.05900000000001,33.725],[73.043,33.725],[73.043,33.707]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.051,33.716]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.184885,24.87646],[67.200885,24.87646],[67.200885,24.894460000000002],[67.184885,24.894460000000002],[67.184885,24.87646]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.192885,24.88546]}'::jsonb,
   '{"residentEstimate":4820,"householdEstimate":1210}'::jsonb,
   now(),
   now()
@@ -79,8 +79,8 @@ VALUES (
   'Phase 2',
   'P2',
   2,
-  '{"type":"Polygon","coordinates":[[[73.05900000000001,33.707],[73.07100000000001,33.707],[73.07100000000001,33.725],[73.05900000000001,33.725],[73.05900000000001,33.707]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.06500000000001,33.716]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.200885,24.87646],[67.212885,24.87646],[67.212885,24.894460000000002],[67.200885,24.894460000000002],[67.200885,24.87646]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.206885,24.88546]}'::jsonb,
   '{"residentEstimate":3160,"householdEstimate":840}'::jsonb,
   now(),
   now()
@@ -102,8 +102,8 @@ VALUES (
   'Sector A',
   'A',
   1,
-  '{"type":"Polygon","coordinates":[[[73.043,33.716],[73.051,33.716],[73.051,33.725],[73.043,33.725],[73.043,33.716]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.04700000000001,33.7205]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.184885,24.885460000000002],[67.19288499999999,24.885460000000002],[67.19288499999999,24.894460000000002],[67.184885,24.894460000000002],[67.184885,24.885460000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.188885,24.88996]}'::jsonb,
   '{"residentEstimate":1680,"householdEstimate":420}'::jsonb,
   now(),
   now()
@@ -125,8 +125,8 @@ VALUES (
   'Sector D',
   'D',
   1,
-  '{"type":"Polygon","coordinates":[[[73.05900000000001,33.716],[73.07100000000001,33.716],[73.07100000000001,33.725],[73.05900000000001,33.725],[73.05900000000001,33.716]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.06500000000001,33.7205]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.200885,24.885460000000002],[67.212885,24.885460000000002],[67.212885,24.894460000000002],[67.200885,24.894460000000002],[67.200885,24.885460000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.206885,24.88996]}'::jsonb,
   '{"residentEstimate":1740,"householdEstimate":450}'::jsonb,
   now(),
   now()
@@ -148,8 +148,8 @@ VALUES (
   'Sector B',
   'B',
   2,
-  '{"type":"Polygon","coordinates":[[[73.051,33.716],[73.05900000000001,33.716],[73.05900000000001,33.725],[73.051,33.725],[73.051,33.716]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.055,33.7205]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.19288499999999,24.885460000000002],[67.200885,24.885460000000002],[67.200885,24.894460000000002],[67.19288499999999,24.894460000000002],[67.19288499999999,24.885460000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.196885,24.88996]}'::jsonb,
   '{"residentEstimate":1920,"householdEstimate":480}'::jsonb,
   now(),
   now()
@@ -171,8 +171,8 @@ VALUES (
   'Sector E',
   'E',
   2,
-  '{"type":"Polygon","coordinates":[[[73.05900000000001,33.707],[73.07100000000001,33.707],[73.07100000000001,33.716],[73.05900000000001,33.716],[73.05900000000001,33.707]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.06500000000001,33.7115]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.200885,24.87646],[67.212885,24.87646],[67.212885,24.885460000000002],[67.200885,24.885460000000002],[67.200885,24.87646]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.206885,24.88096]}'::jsonb,
   '{"residentEstimate":1420,"householdEstimate":390}'::jsonb,
   now(),
   now()
@@ -194,8 +194,8 @@ VALUES (
   'Sector C',
   'C',
   3,
-  '{"type":"Polygon","coordinates":[[[73.043,33.707],[73.05900000000001,33.707],[73.05900000000001,33.716],[73.043,33.716],[73.043,33.707]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.051,33.7115]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.184885,24.87646],[67.200885,24.87646],[67.200885,24.885460000000002],[67.184885,24.885460000000002],[67.184885,24.87646]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.192885,24.88096]}'::jsonb,
   '{"residentEstimate":1220,"householdEstimate":310}'::jsonb,
   now(),
   now()
@@ -217,8 +217,8 @@ VALUES (
   'Block A1',
   'A1',
   1,
-  '{"type":"Polygon","coordinates":[[[73.043,33.7205],[73.04700000000001,33.7205],[73.04700000000001,33.725],[73.043,33.725],[73.043,33.7205]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.045,33.722750000000005]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.184885,24.889960000000002],[67.188885,24.889960000000002],[67.188885,24.894460000000002],[67.184885,24.894460000000002],[67.184885,24.889960000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.186885,24.89221]}'::jsonb,
   '{"residentEstimate":420,"householdEstimate":105}'::jsonb,
   now(),
   now()
@@ -240,8 +240,8 @@ VALUES (
   'Block B1',
   'B1',
   1,
-  '{"type":"Polygon","coordinates":[[[73.051,33.7205],[73.055,33.7205],[73.055,33.725],[73.051,33.725],[73.051,33.7205]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.05300000000001,33.722750000000005]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.19288499999999,24.889960000000002],[67.196885,24.889960000000002],[67.196885,24.894460000000002],[67.19288499999999,24.894460000000002],[67.19288499999999,24.889960000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.194885,24.89221]}'::jsonb,
   '{"residentEstimate":510,"householdEstimate":128}'::jsonb,
   now(),
   now()
@@ -263,8 +263,8 @@ VALUES (
   'Block D1',
   'D1',
   1,
-  '{"type":"Polygon","coordinates":[[[73.05900000000001,33.7205],[73.06500000000001,33.7205],[73.06500000000001,33.725],[73.05900000000001,33.725],[73.05900000000001,33.7205]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.06200000000001,33.722750000000005]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.200885,24.889960000000002],[67.206885,24.889960000000002],[67.206885,24.894460000000002],[67.200885,24.894460000000002],[67.200885,24.889960000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.203885,24.89221]}'::jsonb,
   '{"residentEstimate":480,"householdEstimate":120}'::jsonb,
   now(),
   now()
@@ -286,8 +286,8 @@ VALUES (
   'Block A2',
   'A2',
   2,
-  '{"type":"Polygon","coordinates":[[[73.04700000000001,33.7205],[73.051,33.7205],[73.051,33.725],[73.04700000000001,33.725],[73.04700000000001,33.7205]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.049,33.722750000000005]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.188885,24.889960000000002],[67.19288499999999,24.889960000000002],[67.19288499999999,24.894460000000002],[67.188885,24.894460000000002],[67.188885,24.889960000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.190885,24.89221]}'::jsonb,
   '{"residentEstimate":390,"householdEstimate":98}'::jsonb,
   now(),
   now()
@@ -309,8 +309,8 @@ VALUES (
   'Block B2',
   'B2',
   2,
-  '{"type":"Polygon","coordinates":[[[73.055,33.7205],[73.05900000000001,33.7205],[73.05900000000001,33.725],[73.055,33.725],[73.055,33.7205]]]}'::jsonb,
-  '{"type":"Point","coordinates":[73.057,33.722750000000005]}'::jsonb,
+  '{"type":"Polygon","coordinates":[[[67.196885,24.889960000000002],[67.200885,24.889960000000002],[67.200885,24.894460000000002],[67.196885,24.894460000000002],[67.196885,24.889960000000002]]]}'::jsonb,
+  '{"type":"Point","coordinates":[67.198885,24.89221]}'::jsonb,
   '{"residentEstimate":460,"householdEstimate":116}'::jsonb,
   now(),
   now()
@@ -330,7 +330,7 @@ VALUES (
   'gate',
   'Main Gate',
   'Primary entry with visitor management',
-  '{"type":"Point","coordinates":[73.051,33.7068]}'::jsonb,
+  '{"type":"Point","coordinates":[67.192885,24.87626]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -349,7 +349,7 @@ VALUES (
   'gate',
   'East Gate',
   'Residents & service vehicles',
-  '{"type":"Point","coordinates":[73.0712,33.716]}'::jsonb,
+  '{"type":"Point","coordinates":[67.213085,24.88546]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -368,7 +368,7 @@ VALUES (
   'park',
   'Central Park',
   'Playgrounds, walking track, weekend markets',
-  '{"type":"Point","coordinates":[73.05300000000001,33.718]}'::jsonb,
+  '{"type":"Point","coordinates":[67.194885,24.88746]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -387,7 +387,7 @@ VALUES (
   'community_center',
   'Community Center',
   'Events hall, committee rooms, coworking corner',
-  '{"type":"Point","coordinates":[73.05600000000001,33.713]}'::jsonb,
+  '{"type":"Point","coordinates":[67.197885,24.88246]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -406,7 +406,7 @@ VALUES (
   'school',
   'Jaffar-e-Tayyar Academy',
   'Primary & secondary campus',
-  '{"type":"Point","coordinates":[73.046,33.722]}'::jsonb,
+  '{"type":"Point","coordinates":[67.187885,24.89146]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -425,7 +425,7 @@ VALUES (
   'place_of_worship',
   'Masjid Al-Noor',
   'Central congregational mosque',
-  '{"type":"Point","coordinates":[73.063,33.721000000000004]}'::jsonb,
+  '{"type":"Point","coordinates":[67.204885,24.89046]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -444,7 +444,7 @@ VALUES (
   'medical',
   'Valley Care Clinic',
   'General practice & urgent care',
-  '{"type":"Point","coordinates":[73.066,33.712]}'::jsonb,
+  '{"type":"Point","coordinates":[67.207885,24.88146]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -463,7 +463,7 @@ VALUES (
   'office',
   'Society Management Office',
   'Admin desk, billing, complaints',
-  '{"type":"Point","coordinates":[73.054,33.709]}'::jsonb,
+  '{"type":"Point","coordinates":[67.195885,24.87846]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -482,7 +482,7 @@ VALUES (
   'commercial',
   'Plaza Market',
   'Groceries, pharmacy, cafes',
-  '{"type":"Point","coordinates":[73.061,33.71]}'::jsonb,
+  '{"type":"Point","coordinates":[67.202885,24.87946]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -503,7 +503,7 @@ VALUES (
   '12, Block A1, Sector A, Phase 1',
   'house',
   'occupied',
-  '{"type":"Point","coordinates":[73.04450000000001,33.722500000000004]}'::jsonb,
+  '{"type":"Point","coordinates":[67.186385,24.89196]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -525,7 +525,7 @@ VALUES (
   '18, Block A1, Sector A, Phase 1',
   'house',
   'occupied',
-  '{"type":"Point","coordinates":[73.0455,33.723200000000006]}'::jsonb,
+  '{"type":"Point","coordinates":[67.187385,24.89266]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -547,7 +547,7 @@ VALUES (
   '5, Block A2, Sector A, Phase 1',
   'house',
   'vacant',
-  '{"type":"Point","coordinates":[73.0485,33.722]}'::jsonb,
+  '{"type":"Point","coordinates":[67.190385,24.89146]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -569,7 +569,7 @@ VALUES (
   '22, Block B1, Sector B, Phase 1',
   'house',
   'occupied',
-  '{"type":"Point","coordinates":[73.05250000000001,33.72280000000001]}'::jsonb,
+  '{"type":"Point","coordinates":[67.194385,24.89226]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -591,7 +591,7 @@ VALUES (
   '31-A, Block B1, Sector B, Phase 1',
   'apartment',
   'occupied',
-  '{"type":"Point","coordinates":[73.05350000000001,33.7218]}'::jsonb,
+  '{"type":"Point","coordinates":[67.195385,24.89126]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -613,7 +613,7 @@ VALUES (
   '8, Block B2, Sector B, Phase 1',
   'house',
   'under_construction',
-  '{"type":"Point","coordinates":[73.057,33.7222]}'::jsonb,
+  '{"type":"Point","coordinates":[67.198885,24.89166]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -635,7 +635,7 @@ VALUES (
   'Plot 44, Sector C, Phase 1',
   'plot',
   'vacant',
-  '{"type":"Point","coordinates":[73.049,33.711000000000006]}'::jsonb,
+  '{"type":"Point","coordinates":[67.190885,24.88046]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -657,7 +657,7 @@ VALUES (
   '9, Block D1, Sector D, Phase 2',
   'house',
   'occupied',
-  '{"type":"Point","coordinates":[73.06150000000001,33.722500000000004]}'::jsonb,
+  '{"type":"Point","coordinates":[67.203385,24.89196]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -679,7 +679,7 @@ VALUES (
   '16, Block D1, Sector D, Phase 2',
   'commercial',
   'occupied',
-  '{"type":"Point","coordinates":[73.063,33.723000000000006]}'::jsonb,
+  '{"type":"Point","coordinates":[67.204885,24.89246]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -701,7 +701,7 @@ VALUES (
   '3, Sector E, Phase 2',
   'house',
   'occupied',
-  '{"type":"Point","coordinates":[73.06500000000001,33.7105]}'::jsonb,
+  '{"type":"Point","coordinates":[67.206885,24.87996]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -723,7 +723,7 @@ VALUES (
   '21, Sector E, Phase 2',
   'house',
   'occupied',
-  '{"type":"Point","coordinates":[73.06700000000001,33.712]}'::jsonb,
+  '{"type":"Point","coordinates":[67.208885,24.88146]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()
@@ -745,7 +745,7 @@ VALUES (
   '27, Sector E, Phase 2',
   'mixed',
   'occupied',
-  '{"type":"Point","coordinates":[73.0685,33.709500000000006]}'::jsonb,
+  '{"type":"Point","coordinates":[67.210385,24.87896]}'::jsonb,
   '{}'::jsonb,
   now(),
   now()

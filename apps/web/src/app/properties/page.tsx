@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchProperties, type PropertyRow } from "@/lib/api";
 
 const statusStyles: Record<string, string> = {
-  occupied: "bg-emerald-100 text-emerald-800",
-  vacant: "bg-amber-100 text-amber-900",
-  under_construction: "bg-sky-100 text-sky-900",
+  occupied: "bg-[var(--cos-teal-soft)] text-teal",
+  vacant: "bg-[var(--cos-sand)] text-ink",
+  under_construction: "bg-[var(--cos-sand-deep)] text-ink",
   unknown: "bg-stone-100 text-stone-700",
 };
 

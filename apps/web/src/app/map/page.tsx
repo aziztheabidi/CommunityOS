@@ -50,8 +50,8 @@ export default function MapPage() {
           </p>
           <h1 className="mt-2 font-display text-4xl text-ink">Interactive geography</h1>
           <p className="mt-2 max-w-2xl text-sm text-[color-mix(in_oklab,var(--cos-ink)_68%,transparent)]">
-            Toggle layers, inspect sectors, and see resident / business / event intelligence for the
-            selected area.
+            Satellite basemap centered on Jaffar-e-Tayyar CHS (Malir, Karachi). Toggle layers and
+            inspect sector intelligence for the selected area.
           </p>
         </div>
       </header>
@@ -168,9 +168,9 @@ export default function MapPage() {
             </div>
           ) : null}
 
-          <div className="mt-auto rounded-2xl bg-[linear-gradient(145deg,#0b1f24,#0f6b6b)] p-4 text-white">
-            <p className="text-xs uppercase tracking-[0.14em] text-white/60">Privacy note</p>
-            <p className="mt-2 text-sm text-white/85">
+          <div className="mt-auto rounded-xl border border-[var(--cos-border)] bg-[var(--cos-sand)] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal">Privacy note</p>
+            <p className="mt-2 text-sm leading-relaxed text-[color-mix(in_oklab,var(--cos-ink)_68%,transparent)]">
               Exact household coordinates are permission-gated. Aggregates use minimum bucket
               thresholds so small groups cannot be singled out.
             </p>

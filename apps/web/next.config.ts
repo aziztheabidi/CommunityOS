@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@communityos/ui", "@communityos/maps"],
+  // UI has JSX and must be transpiled. Maps is plain ESM dist — leave it out so
+  // named exports (buildBasemapStyle, etc.) resolve correctly in webpack.
+  transpilePackages: ["@communityos/ui"],
   poweredByHeader: false,
   reactStrictMode: true,
 };

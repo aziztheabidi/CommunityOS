@@ -139,13 +139,13 @@ export default function BusinessesPage() {
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {row.isResidentOwned ? (
-                  <span className="cos-pill bg-emerald-100 text-emerald-800">Resident-owned</span>
+                  <span className="cos-pill bg-[var(--cos-teal-soft)] text-teal">Resident-owned</span>
                 ) : null}
                 {row.isHiring ? (
-                  <span className="cos-pill bg-amber-100 text-amber-900">Hiring</span>
+                  <span className="cos-pill bg-[var(--cos-sand)] text-ink">Hiring</span>
                 ) : null}
                 {row.offersResidentDiscount ? (
-                  <span className="cos-pill bg-sky-100 text-sky-900">Resident discount</span>
+                  <span className="cos-pill bg-[var(--cos-sand)] text-ink">Resident discount</span>
                 ) : null}
               </div>
               <div className="mt-4">

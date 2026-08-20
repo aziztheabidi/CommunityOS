@@ -12,7 +12,16 @@ export type DemoSocietyBundle = {
   };
   settings: {
     heatmapMinBucketSize: number;
-    branding: { primaryLabel: string; tagline: string };
+    branding: {
+      primaryLabel: string;
+      tagline: string;
+      location?: {
+        district: string;
+        city: string;
+        postalCode: string;
+        center: { lat: number; lng: number };
+      };
+    };
   };
   levels: Array<{ key: string; label: string; sortOrder: number }>;
   areas: Array<{
@@ -56,8 +65,10 @@ export type DemoSocietyBundle = {
   };
 };
 
-/** Fictional society footprint near a temperate suburban grid (WGS84). */
-const ORIGIN = { lng: 73.055, lat: 33.715 };
+import { SOCIETY_ORIGIN, societyLngLat } from "./location.js";
+
+/** Society footprint centered on Malir, Karachi (WGS84). */
+const ORIGIN = { lng: SOCIETY_ORIGIN.lng, lat: SOCIETY_ORIGIN.lat };
 
 function poly(
   x0: number,
@@ -80,7 +91,7 @@ function poly(
 }
 
 function point(x: number, y: number): DemoGeoJsonGeometry {
-  return { type: "Point", coordinates: [ORIGIN.lng + x, ORIGIN.lat + y] };
+  return { type: "Point", coordinates: societyLngLat(x, y) };
 }
 
 function centroidOf(x0: number, y0: number, x1: number, y1: number): DemoGeoJsonGeometry {
@@ -101,6 +112,12 @@ export const DEMO_SOCIETY: DemoSocietyBundle = {
     branding: {
       primaryLabel: "Jaffar-e-Tayyar",
       tagline: "Connected community. Shared opportunity.",
+      location: {
+        district: SOCIETY_ORIGIN.district,
+        city: SOCIETY_ORIGIN.city,
+        postalCode: SOCIETY_ORIGIN.postalCode,
+        center: { lat: SOCIETY_ORIGIN.lat, lng: SOCIETY_ORIGIN.lng },
+      },
     },
   },
   levels: [

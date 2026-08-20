@@ -94,7 +94,7 @@ export default function FeedPage() {
                   {row.kind.replaceAll("_", " ")}
                 </span>
                 {row.isPinned ? (
-                  <span className="cos-pill bg-amber-100 text-amber-900">Pinned</span>
+                  <span className="cos-pill bg-[var(--cos-teal-soft)] text-teal">Pinned</span>
                 ) : null}
                 <span className="ml-auto text-xs text-[var(--cos-ink)]/50">
                   {formatWhen(row.createdAt)}

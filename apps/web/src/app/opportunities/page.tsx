@@ -111,7 +111,7 @@ export default function OpportunitiesPage() {
                   <span className="cos-pill bg-white text-[var(--cos-ink)]/70">{row.compensation}</span>
                 ) : null}
                 {row.isRemoteOk ? (
-                  <span className="cos-pill bg-sky-100 text-sky-900">Remote OK</span>
+                  <span className="cos-pill bg-[var(--cos-teal-soft)] text-teal">Remote OK</span>
                 ) : null}
               </div>
               {row.posterId ? (

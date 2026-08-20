@@ -171,24 +171,22 @@ export default function AdminPage() {
 
   return (
     <div className="space-y-8">
-      <header className="relative overflow-hidden rounded-[1.6rem] border border-[var(--cos-border)] bg-[linear-gradient(135deg,#0b1f24_0%,#12353a_55%,#0f6b6b_120%)] p-6 text-white shadow-[var(--cos-shadow)] md:p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/65">
+      <header className="cos-card p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal">
           Society administration
         </p>
-        <h1 className="mt-2 font-display text-4xl md:text-5xl">{society.name}</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/75">
+        <h1 className="mt-2 font-display text-3xl tracking-tight text-ink md:text-4xl">
+          {society.name}
+        </h1>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color-mix(in_oklab,var(--cos-ink)_68%,transparent)]">
           Control center for geography, people, businesses, engagement, privacy, and community
-          intelligence. Use the modules below to manage day-to-day operations.
+          intelligence.
         </p>
-        <div className="mt-5 flex flex-wrap gap-2 text-xs">
-          <span className="rounded-full bg-white/15 px-3 py-1.5 backdrop-blur">
-            Data: {dataSource}
-          </span>
-          <span className="rounded-full bg-white/15 px-3 py-1.5 backdrop-blur">
-            Timezone: {society.timezone}
-          </span>
-          <span className="rounded-full bg-white/15 px-3 py-1.5 backdrop-blur">
-            Heatmap min bucket: {society.settings.heatmapMinBucketSize}
+        <div className="mt-4 flex flex-wrap gap-2 text-xs">
+          <span className="cos-pill bg-[var(--cos-sand)] text-ink">Data: {dataSource}</span>
+          <span className="cos-pill bg-[var(--cos-sand)] text-ink">Timezone: {society.timezone}</span>
+          <span className="cos-pill bg-[var(--cos-sand)] text-ink">
+            Heatmap min: {society.settings.heatmapMinBucketSize}
           </span>
         </div>
       </header>

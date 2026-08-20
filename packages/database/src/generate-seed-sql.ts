@@ -16,7 +16,7 @@ function sqlText(value: string): string {
 
 const society = DEMO_SOCIETY.society;
 const lines: string[] = [
-  "-- Seed: Jaffar-e-Tayyar Society",
+  "-- Seed: Jaffar-e-Tayyar Society (Malir, Karachi · ~24.88446 N, 67.196885 E · postal 75050)",
   "-- Paste into Supabase SQL Editor on the CommunityOS project only.",
   "-- Safe to re-run (upserts / ON CONFLICT).",
   "BEGIN;",

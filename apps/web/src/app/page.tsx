@@ -66,17 +66,17 @@ export default async function HomePage() {
   }));
 
   const pulseChart = [
-    { label: "Mentors", value: people.mentors, color: "#0d9488" },
-    { label: "Hiring", value: people.hiring, color: "#f59e0b" },
-    { label: "Open to work", value: people.lookingForWork, color: "#06b6d4" },
-    { label: "Connections", value: life.connections, color: "#10b981" },
+    { label: "Mentors", value: people.mentors },
+    { label: "Hiring", value: people.hiring },
+    { label: "Open to work", value: people.lookingForWork },
+    { label: "Connections", value: life.connections },
   ];
 
   const engagementChart = [
-    { label: "Feed posts", value: life.posts, color: "#0ea5e9" },
-    { label: "Events", value: life.upcomingEvents, color: "#f97316" },
-    { label: "Opportunities", value: life.openOpportunities, color: "#10b981" },
-    { label: "Households", value: people.households, color: "#0d9488" },
+    { label: "Feed posts", value: life.posts },
+    { label: "Events", value: life.upcomingEvents },
+    { label: "Opportunities", value: life.openOpportunities },
+    { label: "Households", value: people.households },
   ];
 
   const opportunityKinds = Object.entries(
@@ -98,92 +98,67 @@ export default async function HomePage() {
   }));
 
   return (
-    <div className="space-y-8">
-      <section className="cos-fade-up relative overflow-hidden rounded-[1.75rem] border border-white/50 bg-[linear-gradient(135deg,#042f2e_0%,#0f766e_38%,#06b6d4_72%,#f97316_125%)] p-6 text-white shadow-[0_20px_60px_rgba(15,118,110,0.28)] md:p-9">
-        <div className="pointer-events-none absolute -left-10 top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.22),transparent_70%)]" />
-        <div className="pointer-events-none absolute -right-8 -top-12 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(251,146,60,0.35),transparent_68%)]" />
-        <div className="pointer-events-none absolute bottom-0 left-1/3 h-32 w-64 rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.35),transparent_70%)] blur-2xl" />
-        <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-white/75">
+    <div className="space-y-6">
+      <section className="cos-card p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal">
           {greeting()}, Administrator
         </p>
-        <h1 className="relative mt-3 max-w-3xl font-display text-4xl leading-tight md:text-5xl">
+        <h1 className="mt-2 max-w-3xl font-display text-3xl tracking-tight text-ink md:text-4xl">
           {society.name}
         </h1>
-        <p className="relative mt-4 max-w-2xl text-base leading-relaxed text-white/85">
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color-mix(in_oklab,var(--cos-ink)_68%,transparent)]">
           {society.settings.branding.tagline ||
-            "A living Community Graph across people, places, professions, and opportunity."}
+            "People, places, professions, and opportunity in one Community Graph."}
         </p>
-        <div className="relative mt-7 flex flex-wrap gap-3">
+        <div className="mt-5 flex flex-wrap gap-2">
           <Link href="/map">
-            <Button className="!bg-white !text-teal-900 !shadow-lg">Open Society Map</Button>
+            <Button>Society Map</Button>
           </Link>
           <Link href="/admin">
-            <Button variant="secondary" className="!bg-white/15 !text-white !ring-white/30">
-              Admin console
-            </Button>
+            <Button variant="secondary">Admin</Button>
           </Link>
           <Link href="/analytics">
-            <Button variant="secondary" className="!bg-white/15 !text-white !ring-white/30">
-              Full analytics
-            </Button>
+            <Button variant="ghost">Analytics</Button>
           </Link>
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Link href="/residents" className="cos-fade-up block transition hover:-translate-y-1" style={{ animationDelay: "40ms" }}>
-          <StatCard
-            tone="teal"
-            label="Residents"
-            value={people.residents.toLocaleString()}
-            hint="Active community members"
-          />
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Link href="/residents" className="block transition hover:opacity-90">
+          <StatCard label="Residents" value={people.residents.toLocaleString()} hint="Browse profiles" />
         </Link>
-        <Link href="/events" className="cos-fade-up block transition hover:-translate-y-1" style={{ animationDelay: "90ms" }}>
+        <Link href="/events" className="block transition hover:opacity-90">
           <StatCard
-            tone="coral"
             label="Upcoming events"
             value={life.upcomingEvents.toLocaleString()}
-            hint="Camps, clinics & meetups"
+            hint="View calendar"
           />
         </Link>
-        <Link href="/opportunities" className="cos-fade-up block transition hover:-translate-y-1" style={{ animationDelay: "140ms" }}>
+        <Link href="/opportunities" className="block transition hover:opacity-90">
           <StatCard
-            tone="emerald"
             label="Open opportunities"
             value={life.openOpportunities.toLocaleString()}
-            hint="Jobs · mentorship · volunteer"
+            hint="Jobs & mentorship"
           />
         </Link>
-        <Link href="/map" className="cos-fade-up block transition hover:-translate-y-1" style={{ animationDelay: "190ms" }}>
-          <StatCard
-            tone="sky"
-            label="Amenities"
-            value={String(society.stats.amenities)}
-            hint="Mapped community facilities"
-          />
+        <Link href="/map" className="block transition hover:opacity-90">
+          <StatCard label="Amenities" value={String(society.stats.amenities)} hint="On the map" />
         </Link>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-3">
-        <div className="cos-card cos-card-glow cos-fade-up p-5 md:p-6 xl:col-span-1">
+      <section className="grid gap-4 xl:grid-cols-3">
+        <div className="cos-card p-5 md:p-6">
           <div className="mb-1 flex items-center justify-between gap-2">
-            <h2 className="font-display text-2xl text-ink">Sector population</h2>
-            <span className="cos-pill bg-[linear-gradient(135deg,#ccfbf1,#cffafe)] text-teal-800">
-              Live
-            </span>
+            <h2 className="cos-section-title">Sector population</h2>
+            <span className="cos-pill bg-[var(--cos-teal-soft)] text-teal">Live</span>
           </div>
-          <p className="mb-4 text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">
-            Resident estimates by sector for a quick geographic glance.
-          </p>
+          <p className="cos-muted mb-4">Resident estimates by sector.</p>
           <VerticalBarChart data={sectorChart} />
         </div>
 
-        <div className="cos-card cos-card-glow cos-fade-up p-5 md:p-6" style={{ animationDelay: "80ms" }}>
-          <h2 className="font-display text-2xl text-ink">Talent pulse</h2>
-          <p className="mt-1 mb-4 text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">
-            Mentors, hiring, and work-seeking signals.
-          </p>
+        <div className="cos-card p-5 md:p-6">
+          <h2 className="cos-section-title">Talent pulse</h2>
+          <p className="cos-muted mb-4 mt-1">Mentors, hiring, and work-seeking signals.</p>
           <DonutChart
             data={pulseChart}
             centerLabel="signals"
@@ -193,51 +168,43 @@ export default async function HomePage() {
           />
         </div>
 
-        <div className="cos-card cos-card-glow cos-fade-up p-5 md:p-6" style={{ animationDelay: "120ms" }}>
-          <h2 className="font-display text-2xl text-ink">Engagement mix</h2>
-          <p className="mt-1 mb-4 text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">
-            Posts, events, opportunities, and households at a glance.
-          </p>
+        <div className="cos-card p-5 md:p-6">
+          <h2 className="cos-section-title">Engagement</h2>
+          <p className="cos-muted mb-4 mt-1">Posts, events, opportunities, households.</p>
           <HorizontalBars data={engagementChart} />
         </div>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.35fr_0.95fr]">
-        <div className="cos-card cos-card-glow overflow-hidden p-5 md:p-6">
+      <section className="grid gap-4 xl:grid-cols-[1.35fr_0.95fr]">
+        <div className="cos-card p-5 md:p-6">
           <div className="mb-4 flex items-end justify-between gap-3">
             <div>
-              <h2 className="font-display text-2xl text-ink">Society Map</h2>
-              <p className="mt-1 text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">
-                Interactive geography with amenities and properties.
-              </p>
+              <h2 className="cos-section-title">Society Map</h2>
+              <p className="cos-muted mt-1">Geography, amenities, and properties.</p>
             </div>
             <Link href="/map" className="text-sm font-semibold text-teal">
               Full map →
             </Link>
           </div>
-          <div className="overflow-hidden rounded-2xl ring-1 ring-teal-500/15">
+          <div className="overflow-hidden rounded-[10px] border border-[var(--cos-border)]">
             <HomeMapPreview />
           </div>
         </div>
 
-        <div className="space-y-5">
-          <div className="cos-card cos-card-glow p-5 md:p-6">
-            <h2 className="font-display text-2xl text-ink">Opportunity kinds</h2>
-            <p className="mt-1 mb-4 text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">
-              Open roles grouped by type.
-            </p>
+        <div className="space-y-4">
+          <div className="cos-card p-5 md:p-6">
+            <h2 className="cos-section-title">Opportunity kinds</h2>
+            <p className="cos-muted mb-4 mt-1">Open roles by type.</p>
             {opportunityKinds.length ? (
-              <DonutChart data={opportunityKinds} centerLabel="open" size={160} />
+              <DonutChart data={opportunityKinds} centerLabel="open" size={150} />
             ) : (
               <p className="text-sm text-[var(--cos-ink)]/50">No open opportunities yet.</p>
             )}
           </div>
 
-          <div className="cos-card p-5 md:p-6 bg-[linear-gradient(160deg,#fff7ed_0%,#ffffff_45%,#ecfeff_100%)]">
-            <h2 className="font-display text-2xl text-ink">Event interest</h2>
-            <p className="mt-1 mb-4 text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">
-              Going + interested RSVPs for upcoming events.
-            </p>
+          <div className="cos-card p-5 md:p-6">
+            <h2 className="cos-section-title">Event interest</h2>
+            <p className="cos-muted mb-4 mt-1">Going + interested RSVPs.</p>
             {eventRsvp.length ? (
               <HorizontalBars data={eventRsvp} />
             ) : (
@@ -247,36 +214,35 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-5 lg:grid-cols-2">
+      <section className="grid gap-4 lg:grid-cols-2">
         <div className="cos-card p-5 md:p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-2xl text-ink">Sector pulse</h2>
+            <h2 className="cos-section-title">Sectors</h2>
             <Link href="/geography" className="text-sm font-semibold text-teal">
               Geography →
             </Link>
           </div>
-          <ul className="space-y-3">
-            {sectors.map((sector, index) => (
+          <ul className="space-y-2">
+            {sectors.map((sector) => (
               <li
                 key={sector.id}
-                className="flex items-center justify-between gap-3 rounded-2xl bg-[linear-gradient(90deg,rgba(13,148,136,0.08),rgba(6,182,212,0.05))] px-3 py-2.5"
+                className="flex items-center justify-between gap-3 rounded-lg bg-[var(--cos-sand)] px-3 py-2.5"
               >
                 <div>
                   <p className="text-sm font-semibold text-ink">{sector.name}</p>
-                  <p className="text-xs text-[color-mix(in_oklab,var(--cos-ink)_55%,transparent)]">
+                  <p className="text-xs text-[color-mix(in_oklab,var(--cos-ink)_50%,transparent)]">
                     {sector.householdEstimate} households
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-display text-xl text-ink">
+                  <p className="font-display text-lg text-ink">
                     {sector.residentEstimate.toLocaleString()}
                   </p>
-                  <div className="mt-1 h-1.5 w-24 overflow-hidden rounded-full bg-white/80">
+                  <div className="mt-1 h-1 w-20 overflow-hidden rounded-full bg-white">
                     <div
-                      className="h-full rounded-full"
+                      className="h-full rounded-full bg-[var(--cos-teal)]"
                       style={{
                         width: `${Math.min(100, (sector.residentEstimate / 2000) * 100)}%`,
-                        background: `linear-gradient(90deg, ${["#0d9488", "#06b6d4", "#10b981", "#f59e0b", "#f97316"][index % 5]}, #67e8f9)`,
                       }}
                     />
                   </div>
@@ -288,7 +254,7 @@ export default async function HomePage() {
 
         <div className="cos-card p-5 md:p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-2xl text-ink">Facilities</h2>
+            <h2 className="cos-section-title">Facilities</h2>
             <Link href="/map" className="text-sm font-semibold text-teal">
               On map →
             </Link>
@@ -297,15 +263,15 @@ export default async function HomePage() {
             {features.slice(0, 6).map((feature) => (
               <li
                 key={feature.id}
-                className="flex items-start justify-between gap-3 rounded-2xl border border-teal-500/10 bg-gradient-to-r from-white to-cyan-50/60 px-3 py-2.5"
+                className="flex items-start justify-between gap-3 rounded-lg border border-[var(--cos-border)] px-3 py-2.5"
               >
                 <div>
                   <p className="text-sm font-semibold text-ink">{feature.name}</p>
-                  <p className="text-xs text-[color-mix(in_oklab,var(--cos-ink)_55%,transparent)]">
+                  <p className="text-xs text-[color-mix(in_oklab,var(--cos-ink)_50%,transparent)]">
                     {feature.description}
                   </p>
                 </div>
-                <span className="cos-pill bg-[linear-gradient(135deg,#ccfbf1,#fff7ed)] text-teal-800">
+                <span className="cos-pill bg-[var(--cos-sand)] text-teal">
                   {feature.featureType.replaceAll("_", " ")}
                 </span>
               </li>

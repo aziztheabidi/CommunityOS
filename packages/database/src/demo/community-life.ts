@@ -1,3 +1,9 @@
+import { societyLngLat } from "./location.js";
+
+function eventPoint(dx: number, dy: number) {
+  return { type: "Point" as const, coordinates: societyLngLat(dx, dy) };
+}
+
 export const DEMO_COMMUNITY_LIFE = {
   connections: [
     {
@@ -144,7 +150,7 @@ export const DEMO_COMMUNITY_LIFE = {
       capacity: 80,
       goingCount: 2,
       interestedCount: 0,
-      geomJson: { type: "Point" as const, coordinates: [67.0795, 24.909] as [number, number] },
+      geomJson: eventPoint(0.001, -0.002),
     },
     {
       id: "evt_tax_clinic",
@@ -158,7 +164,7 @@ export const DEMO_COMMUNITY_LIFE = {
       capacity: 12,
       goingCount: 1,
       interestedCount: 1,
-      geomJson: { type: "Point" as const, coordinates: [67.0855, 24.9034] as [number, number] },
+      geomJson: eventPoint(0.012, -0.004),
     },
     {
       id: "evt_park_cleanup",
@@ -172,7 +178,7 @@ export const DEMO_COMMUNITY_LIFE = {
       capacity: 40,
       goingCount: 1,
       interestedCount: 0,
-      geomJson: { type: "Point" as const, coordinates: [67.0805, 24.9072] as [number, number] },
+      geomJson: eventPoint(-0.002, 0.003),
     },
     {
       id: "evt_youth_coding",
@@ -186,7 +192,7 @@ export const DEMO_COMMUNITY_LIFE = {
       capacity: 25,
       goingCount: 2,
       interestedCount: 0,
-      geomJson: { type: "Point" as const, coordinates: [67.0798, 24.9078] as [number, number] },
+      geomJson: eventPoint(-0.009, 0.007),
     },
     {
       id: "evt_trades_fair",
@@ -200,7 +206,7 @@ export const DEMO_COMMUNITY_LIFE = {
       capacity: 100,
       goingCount: 1,
       interestedCount: 0,
-      geomJson: { type: "Point" as const, coordinates: [67.0789, 24.9089] as [number, number] },
+      geomJson: eventPoint(-0.004, -0.0082),
     },
     {
       id: "evt_dental_day",
@@ -214,7 +220,7 @@ export const DEMO_COMMUNITY_LIFE = {
       capacity: 30,
       goingCount: 0,
       interestedCount: 0,
-      geomJson: { type: "Point" as const, coordinates: [67.0798, 24.9078] as [number, number] },
+      geomJson: eventPoint(-0.006, -0.004),
     },
   ],
   opportunities: [

@@ -1,3 +1,9 @@
+import { societyLngLat } from "./location.js";
+
+function bizPoint(dx: number, dy: number) {
+  return { type: "Point" as const, coordinates: societyLngLat(dx, dy) };
+}
+
 export type DemoBusiness = {
   id: string;
   name: string;
@@ -38,7 +44,7 @@ export const DEMO_BUSINESSES: DemoBusiness[] = [
     verification: "verified",
     owners: [{ residentId: "res_hamza_ali", fullName: "Hamza Ali", title: "Owner" }],
     services: ["Grocery staples", "Home delivery"],
-    geomJson: { type: "Point", coordinates: [67.0822, 24.9051] },
+    geomJson: bizPoint(0.006, -0.005),
   },
   {
     id: "biz_smilecare",
@@ -58,7 +64,7 @@ export const DEMO_BUSINESSES: DemoBusiness[] = [
     verification: "verified",
     owners: [{ residentId: "res_hana_qureshi", fullName: "Hana Qureshi", title: "Clinic Lead" }],
     services: ["Dental checkup"],
-    geomJson: { type: "Point", coordinates: [67.0798, 24.9078] },
+    geomJson: bizPoint(-0.006, -0.004),
   },
   {
     id: "biz_imran_advisory",
@@ -78,7 +84,7 @@ export const DEMO_BUSINESSES: DemoBusiness[] = [
     verification: "verified",
     owners: [{ residentId: "res_nadia_imran", fullName: "Nadia Imran", title: "Principal" }],
     services: ["Tax filing"],
-    geomJson: { type: "Point", coordinates: [67.0855, 24.9034] },
+    geomJson: bizPoint(0.012, -0.004),
   },
   {
     id: "biz_raza_electrical",
@@ -98,7 +104,7 @@ export const DEMO_BUSINESSES: DemoBusiness[] = [
     verification: "pending",
     owners: [{ residentId: "res_usman_raza", fullName: "Usman Raza", title: "Owner" }],
     services: ["Rewiring"],
-    geomJson: { type: "Point", coordinates: [67.0861, 24.9029] },
+    geomJson: bizPoint(0.013, -0.005),
   },
   {
     id: "biz_abbas_plumbing",
@@ -118,7 +124,7 @@ export const DEMO_BUSINESSES: DemoBusiness[] = [
     verification: "verified",
     owners: [{ residentId: "res_zain_abbas", fullName: "Zain Abbas", title: "Owner" }],
     services: ["Leak repair"],
-    geomJson: { type: "Point", coordinates: [67.081, 24.9066] },
+    geomJson: bizPoint(0.002, 0.0072),
   },
   {
     id: "biz_corner_cafe",
@@ -138,7 +144,7 @@ export const DEMO_BUSINESSES: DemoBusiness[] = [
     verification: "unverified",
     owners: [{ residentId: "res_ahmed_khan", fullName: "Ahmed Khan", title: "Co-owner" }],
     services: ["Tea & snacks"],
-    geomJson: { type: "Point", coordinates: [67.0789, 24.9089] },
+    geomJson: bizPoint(-0.004, -0.0082),
   },
 ];
 

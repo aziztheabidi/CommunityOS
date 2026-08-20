@@ -56,26 +56,28 @@ export default function ResidentDetailPage() {
         ← Residents
       </Link>
 
-      <section className="relative overflow-hidden rounded-[1.6rem] border border-[var(--cos-border)] bg-[linear-gradient(135deg,#fffcf7_0%,#e8f4f4_55%,#f7efe4_100%)] p-6 shadow-[var(--cos-shadow)] md:p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-teal">
+      <section className="cos-card p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal">
           {resident.geoAreaName ?? "Society resident"}
         </p>
-        <h1 className="mt-2 font-display text-4xl text-ink md:text-5xl">{resident.fullName}</h1>
-        <p className="mt-3 max-w-2xl text-base text-[color-mix(in_oklab,var(--cos-ink)_72%,transparent)]">
+        <h1 className="mt-2 font-display text-3xl tracking-tight text-ink md:text-4xl">
+          {resident.fullName}
+        </h1>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[color-mix(in_oklab,var(--cos-ink)_68%,transparent)]">
           {resident.headline}
         </p>
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {resident.openToMentoring ? (
-            <span className="cos-pill bg-emerald-100 text-emerald-800">Open to mentoring</span>
+            <span className="cos-pill bg-[var(--cos-teal-soft)] text-teal">Open to mentoring</span>
           ) : null}
           {resident.hiring ? (
-            <span className="cos-pill bg-amber-100 text-amber-900">Hiring</span>
+            <span className="cos-pill bg-[var(--cos-sand)] text-ink">Hiring</span>
           ) : null}
           {resident.lookingForWork ? (
-            <span className="cos-pill bg-sky-100 text-sky-900">Looking for work</span>
+            <span className="cos-pill bg-[var(--cos-sand)] text-ink">Looking for work</span>
           ) : null}
           {resident.volunteerAvail ? (
-            <span className="cos-pill bg-white text-teal">Volunteer available</span>
+            <span className="cos-pill bg-[var(--cos-sand)] text-teal">Volunteer available</span>
           ) : null}
         </div>
       </section>
