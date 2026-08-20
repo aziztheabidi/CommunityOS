@@ -1,34 +1,28 @@
-# Deploying CommunityOS web on Vercel
+# Deploy CommunityOS web on Vercel
 
-The web app is **Next.js** at `apps/web` in a pnpm monorepo.
+## Required dashboard settings (this fixes 404 NOT_FOUND)
 
-## Recommended (dashboard)
+The platform `404: NOT_FOUND` page means Vercel deployed without a Next.js routing manifest — usually wrong Root Directory, Framework “Other”, or Output Directory forced to `public` (only `robots.txt` is there, so `/` 404s).
 
-**Project → Settings → Build and Deployment:**
+In **Project → Settings → Build and Deployment**:
 
-| Setting | Value |
-|--------|--------|
-| Framework Preset | **Next.js** |
-| Root Directory | **`apps/web`** |
-| Include files outside Root Directory | **On** |
-| Output Directory | Override **Off** (never `public`) |
-| Install / Build | leave default, or use `apps/web/vercel.json` |
+1. **Framework Preset** → **Next.js** (turn Override **off** if it says Other)
+2. **Root Directory** → click Edit → select **`apps/web`** → Save  
+   - Enable **Include source files outside of the Root Directory**
+3. **Output Directory** → Override **OFF** (must not be `public`)
+4. Clear any yellow **Production Overrides**
+5. **Deployments** → Redeploy → uncheck **Use existing Build Cache**
 
-Then remove any yellow **Production Overrides** still forcing Output Directory = `public`.
+Do **not** set Root Directory to the repo root. Do **not** use a root `vercel.json` with legacy `builds`.
 
-## If Root Directory stays at the repo root
+## Repo config
 
-Root `vercel.json` uses the Next.js builder on `apps/web/package.json` so Vercel does not look for a static `public` output folder:
+`apps/web/vercel.json` (used when Root Directory is `apps/web`):
 
-```json
-{
-  "installCommand": "pnpm install",
-  "builds": [{ "src": "apps/web/package.json", "use": "@vercel/next" }]
-}
-```
+- `framework: nextjs`
+- `outputDirectory: null` (clears a stuck `public` override)
+- monorepo `installCommand` / `buildCommand`
 
-Prefer switching Root Directory to `apps/web` when you can; `builds` is the legacy monorepo path.
+## Env
 
-## Environment
-
-- `NEXT_PUBLIC_API_URL` — public URL of the Fastify API
+- `NEXT_PUBLIC_API_URL` — Fastify API public URL
