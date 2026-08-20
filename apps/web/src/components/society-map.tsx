@@ -15,7 +15,7 @@ import {
   DEFAULT_MAP_LAYER_TOGGLES,
   FEATURE_MARKER_COLORS,
 } from "@communityos/maps";
-import { DEMO_SOCIETY_ID, fetchMapGeoJson, type MapFeatureCollection } from "@/lib/api";
+import { DEFAULT_SOCIETY_ID, fetchMapGeoJson, type MapFeatureCollection } from "@/lib/api";
 
 export type MapSelection = {
   id: string;
@@ -32,7 +32,7 @@ type SocietyMapProps = {
 };
 
 export function SocietyMap({
-  societyId = DEMO_SOCIETY_ID,
+  societyId = DEFAULT_SOCIETY_ID,
   className,
   onSelect,
   compact = false,

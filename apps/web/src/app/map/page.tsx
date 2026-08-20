@@ -171,8 +171,8 @@ export default function MapPage() {
           <div className="mt-auto rounded-2xl bg-[linear-gradient(145deg,#0b1f24,#0f6b6b)] p-4 text-white">
             <p className="text-xs uppercase tracking-[0.14em] text-white/60">Privacy note</p>
             <p className="mt-2 text-sm text-white/85">
-              Aggregates respect minimum bucket thresholds in production. Exact household
-              coordinates stay permission-gated.
+              Exact household coordinates are permission-gated. Aggregates use minimum bucket
+              thresholds so small groups cannot be singled out.
             </p>
           </div>
         </aside>

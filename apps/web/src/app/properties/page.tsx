@@ -54,7 +54,7 @@ export default function PropertiesPage() {
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-teal">Properties</p>
         <h1 className="mt-2 font-display text-4xl text-ink">Property register</h1>
         <p className="mt-2 max-w-2xl text-sm text-[color-mix(in_oklab,var(--cos-ink)_68%,transparent)]">
-          Structured property records linked to sectors and blocks. Demo sample for
+          Structured property records linked to sectors and blocks for{" "}
           Jaffar-e-Tayyar Society.
         </p>
       </header>

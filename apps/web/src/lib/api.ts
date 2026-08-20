@@ -1,6 +1,6 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
-export const DEMO_SOCIETY_ID = "soc_demo_jaffar_e_tayyar";
+export const DEFAULT_SOCIETY_ID = "soc_demo_jaffar_e_tayyar";
 
 async function apiGet<T>(path: string): Promise<T> {
   const response = await fetch(`${API_URL}${path}`, {
@@ -146,16 +146,16 @@ export function fetchSocieties() {
   return apiGet<{ data: SocietySummary[] }>("/v1/societies");
 }
 
-export function fetchSociety(societyId = DEMO_SOCIETY_ID) {
+export function fetchSociety(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: SocietyDetail }>(`/v1/societies/${societyId}`);
 }
 
-export function fetchGeoAreas(societyId = DEMO_SOCIETY_ID, levelKey?: string) {
+export function fetchGeoAreas(societyId = DEFAULT_SOCIETY_ID, levelKey?: string) {
   const query = levelKey ? `?levelKey=${encodeURIComponent(levelKey)}` : "";
   return apiGet<{ data: GeoArea[] }>(`/v1/societies/${societyId}/geo/areas${query}`);
 }
 
-export function fetchProperties(societyId = DEMO_SOCIETY_ID, params?: { q?: string; status?: string }) {
+export function fetchProperties(societyId = DEFAULT_SOCIETY_ID, params?: { q?: string; status?: string }) {
   const search = new URLSearchParams();
   if (params?.q) search.set("q", params.q);
   if (params?.status) search.set("status", params.status);
@@ -163,17 +163,17 @@ export function fetchProperties(societyId = DEMO_SOCIETY_ID, params?: { q?: stri
   return apiGet<{ data: PropertyRow[] }>(`/v1/societies/${societyId}/properties${suffix}`);
 }
 
-export function fetchFeatures(societyId = DEMO_SOCIETY_ID) {
+export function fetchFeatures(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: GeoFeature[] }>(`/v1/societies/${societyId}/geo/features`);
 }
 
-export function fetchMapGeoJson(societyId = DEMO_SOCIETY_ID, layers: string[]) {
+export function fetchMapGeoJson(societyId = DEFAULT_SOCIETY_ID, layers: string[]) {
   const query = layers.length ? `?layers=${encodeURIComponent(layers.join(","))}` : "";
   return apiGet<MapFeatureCollection>(`/v1/societies/${societyId}/map/geojson${query}`);
 }
 
 export function fetchResidents(
-  societyId = DEMO_SOCIETY_ID,
+  societyId = DEFAULT_SOCIETY_ID,
   params?: { q?: string; mentoring?: boolean; hiring?: boolean; lookingForWork?: boolean },
 ) {
   const search = new URLSearchParams();
@@ -187,26 +187,26 @@ export function fetchResidents(
   );
 }
 
-export function fetchResident(residentId: string, societyId = DEMO_SOCIETY_ID) {
+export function fetchResident(residentId: string, societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: ResidentDetail; source?: string }>(
     `/v1/societies/${societyId}/residents/${residentId}`,
   );
 }
 
-export function fetchHouseholds(societyId = DEMO_SOCIETY_ID) {
+export function fetchHouseholds(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: HouseholdRow[]; source?: string }>(
     `/v1/societies/${societyId}/households`,
   );
 }
 
-export function fetchProfessionalCategories(societyId = DEMO_SOCIETY_ID) {
+export function fetchProfessionalCategories(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: ProfessionalCategory[]; source?: string }>(
     `/v1/societies/${societyId}/professional-categories`,
   );
 }
 
 export function fetchProfessionals(
-  societyId = DEMO_SOCIETY_ID,
+  societyId = DEFAULT_SOCIETY_ID,
   params?: { categoryKey?: string; professionKey?: string; mentoring?: boolean; q?: string },
 ) {
   const search = new URLSearchParams();
@@ -220,7 +220,7 @@ export function fetchProfessionals(
   );
 }
 
-export function fetchPeopleStats(societyId = DEMO_SOCIETY_ID) {
+export function fetchPeopleStats(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{
     data: {
       residents: number;
@@ -260,14 +260,14 @@ export type BusinessRow = {
   services: string[];
 };
 
-export function fetchBusinessCategories(societyId = DEMO_SOCIETY_ID) {
+export function fetchBusinessCategories(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: BusinessCategory[]; source?: string }>(
     `/v1/societies/${societyId}/business-categories`,
   );
 }
 
 export function fetchBusinesses(
-  societyId = DEMO_SOCIETY_ID,
+  societyId = DEFAULT_SOCIETY_ID,
   params?: { q?: string; categoryKey?: string; hiring?: boolean; residentOwned?: boolean },
 ) {
   const search = new URLSearchParams();
@@ -344,24 +344,24 @@ export type MapIntelligence = {
   sampleBusinesses: Array<{ id: string; name: string; categoryLabel: string }>;
 };
 
-export function fetchConnections(societyId = DEMO_SOCIETY_ID, status?: string) {
+export function fetchConnections(societyId = DEFAULT_SOCIETY_ID, status?: string) {
   const query = status ? `?status=${encodeURIComponent(status)}` : "";
   return apiGet<{ data: ConnectionRow[]; source?: string }>(
     `/v1/societies/${societyId}/connections${query}`,
   );
 }
 
-export function fetchPosts(societyId = DEMO_SOCIETY_ID, kind?: string) {
+export function fetchPosts(societyId = DEFAULT_SOCIETY_ID, kind?: string) {
   const query = kind ? `?kind=${encodeURIComponent(kind)}` : "";
   return apiGet<{ data: PostRow[]; source?: string }>(`/v1/societies/${societyId}/posts${query}`);
 }
 
-export function fetchEvents(societyId = DEMO_SOCIETY_ID) {
+export function fetchEvents(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{ data: EventRow[]; source?: string }>(`/v1/societies/${societyId}/events`);
 }
 
 export function fetchOpportunities(
-  societyId = DEMO_SOCIETY_ID,
+  societyId = DEFAULT_SOCIETY_ID,
   params?: { kind?: string; status?: string; q?: string },
 ) {
   const search = new URLSearchParams();
@@ -374,7 +374,7 @@ export function fetchOpportunities(
   );
 }
 
-export function fetchCommunityStats(societyId = DEMO_SOCIETY_ID) {
+export function fetchCommunityStats(societyId = DEFAULT_SOCIETY_ID) {
   return apiGet<{
     data: {
       connections: number;
@@ -386,7 +386,7 @@ export function fetchCommunityStats(societyId = DEMO_SOCIETY_ID) {
   }>(`/v1/societies/${societyId}/community/stats`);
 }
 
-export function fetchMapIntelligence(societyId = DEMO_SOCIETY_ID, areaId?: string) {
+export function fetchMapIntelligence(societyId = DEFAULT_SOCIETY_ID, areaId?: string) {
   const query = areaId ? `?areaId=${encodeURIComponent(areaId)}` : "";
   return apiGet<{ data: MapIntelligence }>(
     `/v1/societies/${societyId}/map/intelligence${query}`,

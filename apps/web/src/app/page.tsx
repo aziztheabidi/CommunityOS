@@ -21,7 +21,7 @@ export default async function HomePage() {
       <div className="cos-card p-8">
         <h1 className="font-display text-3xl text-ink">API offline</h1>
         <p className="mt-3 text-sm text-[color-mix(in_oklab,var(--cos-ink)_70%,transparent)]">
-          Start the API (`pnpm --filter @communityos/api dev` or `pnpm dev`) so demo geography data
+          Start the API (`pnpm --filter @communityos/api dev` or `pnpm dev`) so society data
           can load. Default endpoint: http://localhost:4000
         </p>
       </div>
@@ -46,8 +46,8 @@ export default async function HomePage() {
           <Link href="/map">
             <Button>Open Society Map</Button>
           </Link>
-          <Link href="/feed">
-            <Button variant="secondary">Society feed</Button>
+          <Link href="/admin">
+            <Button variant="secondary">Open Admin</Button>
           </Link>
           <Link href="/opportunities">
             <Button variant="secondary">Opportunities</Button>
@@ -92,7 +92,7 @@ export default async function HomePage() {
             <div>
               <h2 className="font-display text-2xl text-ink">Society Map</h2>
               <p className="mt-1 text-sm text-[color-mix(in_oklab,var(--cos-ink)_65%,transparent)]">
-                Phases, sectors, amenities, and sample properties.
+                Phases, sectors, amenities, and properties.
               </p>
             </div>
             <Link href="/map" className="text-sm font-semibold text-teal">
@@ -106,7 +106,7 @@ export default async function HomePage() {
           <div className="cos-card p-5 md:p-6">
             <h2 className="font-display text-2xl text-ink">Sector pulse</h2>
             <p className="mt-1 text-sm text-[color-mix(in_oklab,var(--cos-ink)_65%,transparent)]">
-              Estimated population by sector (demo).
+              Estimated population by sector.
             </p>
             <ul className="mt-4 space-y-3">
               {sectors.map((sector) => (

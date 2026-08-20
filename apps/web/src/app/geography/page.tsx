@@ -33,7 +33,7 @@ export default async function GeographyPage() {
         {[
           { label: "Phases", value: phases.length },
           { label: "Sectors", value: sectors.length },
-          { label: "Blocks (sample)", value: blocks.length },
+          { label: "Blocks", value: blocks.length },
         ].map((item) => (
           <div key={item.label} className="cos-card p-5">
             <p className="text-sm text-[color-mix(in_oklab,var(--cos-ink)_60%,transparent)]">

@@ -4,20 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const primaryNav = [
-  { href: "/", label: "Home", group: "general" },
-  { href: "/map", label: "Society Map", group: "general" },
-  { href: "/properties", label: "Properties", group: "general" },
-  { href: "/geography", label: "Geography", group: "general" },
-  { href: "/residents", label: "Residents", group: "general" },
-  { href: "/households", label: "Households", group: "general" },
-  { href: "/professionals", label: "Professionals", group: "general" },
-  { href: "/businesses", label: "Businesses", group: "general" },
-  { href: "/network", label: "Network", group: "general" },
-  { href: "/feed", label: "Feed", group: "general" },
-  { href: "/events", label: "Events", group: "general" },
-  { href: "/opportunities", label: "Opportunities", group: "general" },
-  { href: "/analytics", label: "Analytics", group: "general" },
-  { href: "/admin", label: "Admin", group: "admin" },
+  { href: "/", label: "Home" },
+  { href: "/map", label: "Society Map" },
+  { href: "/properties", label: "Properties" },
+  { href: "/geography", label: "Geography" },
+  { href: "/residents", label: "Residents" },
+  { href: "/households", label: "Households" },
+  { href: "/professionals", label: "Professionals" },
+  { href: "/businesses", label: "Businesses" },
+  { href: "/network", label: "Network" },
+  { href: "/feed", label: "Feed" },
+  { href: "/events", label: "Events" },
+  { href: "/opportunities", label: "Opportunities" },
+  { href: "/analytics", label: "Analytics" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -32,27 +32,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <p className="mt-1 text-xs text-white/65">Society Intelligence Platform</p>
           <div className="mt-4 rounded-xl bg-white/10 px-3 py-2 text-xs backdrop-blur">
             <p className="font-semibold text-white/90">Jaffar-e-Tayyar Society</p>
-            <p className="text-white/55">Demo · Milestone 5–9</p>
+            <p className="text-white/55">Administrator workspace</p>
           </div>
         </div>
         <nav className="relative mt-6 space-y-1" aria-label="Primary">
           {primaryNav.map((item) => {
-            const active = pathname === item.href;
+            const active =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
-                href={item.soon ? "#" : item.href}
-                aria-disabled={item.soon}
+                href={item.href}
                 className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition ${
                   active
                     ? "bg-white text-[var(--cos-ink)] shadow-lg shadow-black/10"
-                    : item.soon
-                      ? "cursor-default text-white/35"
-                      : "text-white/80 hover:bg-white/10 hover:text-white"
+                    : "text-white/80 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 <span>{item.label}</span>
-                {item.soon ? <span className="text-[10px] uppercase tracking-wide">Soon</span> : null}
               </Link>
             );
           })}
@@ -68,25 +67,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </span>
             <input
               className="w-full bg-transparent text-sm outline-none placeholder:text-[color-mix(in_oklab,var(--cos-ink)_45%,transparent)]"
-              placeholder="Search sectors, properties, amenities…"
+              placeholder="Search residents, properties, businesses, events…"
               type="search"
             />
           </label>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
+            <Link
+              href="/admin"
               className="hidden rounded-xl border border-[var(--cos-border)] bg-white/80 px-3 py-2 text-xs font-semibold sm:inline-flex"
             >
-              ⌘K
-            </button>
-            <button
-              type="button"
+              Admin
+            </Link>
+            <Link
+              href="/feed"
               className="rounded-xl border border-[var(--cos-border)] bg-white/80 px-3 py-2 text-xs font-semibold"
             >
               Alerts
-            </button>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--cos-teal)] text-xs font-bold text-white">
-              GV
+            </Link>
+            <div
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--cos-teal)] text-xs font-bold text-white"
+              title="Administrator"
+            >
+              AD
             </div>
           </div>
         </header>
