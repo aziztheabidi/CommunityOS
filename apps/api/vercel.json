@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node -e \"console.error('Wrong Vercel Root Directory: use apps/web, not apps/api'); process.exit(1)\""
+}
